@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { withStyles, Grid } from "material-ui";
-import {
-  ItemGrid
-} from "./components";
+import Dashboard from "./Dashboard";
+import { Device } from './models/device';
+const devices = [new Device('device1','udid1-udid1-udid1-udid1-udid1','state', '1','ios'),
+      new Device('device2','udid2','Active', '2','ios'),
+      new Device('device3','udid4','Booted', '3','Android'),
+      new Device('device1','udid1','state', '1','ios'),
+      new Device('device2','udid2','state', '2','ios'),
+      new Device('device3','udid4','state', '3','Android'),
+      new Device('device1','udid1','state', '1','ios'),
+      new Device('device2','udid2','state', '2','ios'),
+      new Device('device3','udid4','state', '3','Android')]
 class App extends Component {
   render() {
     return (
@@ -12,32 +19,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Parallel Appium Dashboard</h1>
         </header>
-        <Grid container>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 1</p>
-          </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 2</p>
-          </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 3</p>
-          </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 4</p>
-          </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 5</p>
-          </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 6</p>
-          </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 7</p>
-          </ItemGrid>
-          <ItemGrid xs={12} sm={6} md={3}>
-            <p>Device 8</p>
-          </ItemGrid>
-        </Grid>
+        <Dashboard devices={devices}/>
       </div>
     );
   }
