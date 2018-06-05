@@ -82,6 +82,11 @@ const dangerBoxShadow = {
     "0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2)"
 };
 
+const appleBoxShadow = {
+  boxShadow:
+    "0 12px 20px -10px rgb(192,192,192, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgb(192,192,192, 0.2)"
+};
+
 const orangeCardHeader = {
   background: "linear-gradient(60deg, #ffa726, #fb8c00)",
   ...warningBoxShadow
@@ -101,6 +106,10 @@ const blueCardHeader = {
 const purpleCardHeader = {
   background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
   ...primaryBoxShadow
+};
+const grayCardHeader = {
+  background: "linear-gradient(60deg, #999999, #A9A9A9)",
+  ...appleBoxShadow
 };
 
 const cardActions = {
@@ -151,6 +160,7 @@ export {
   redCardHeader,
   blueCardHeader,
   purpleCardHeader,
+  grayCardHeader,
   cardActions,
   cardHeader,
   defaultBoxShadow

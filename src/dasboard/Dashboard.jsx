@@ -21,11 +21,30 @@ import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Divider } from '@material-ui/core';
 import './Dashboard.css'
 import PieChart from 'react-minimal-pie-chart';
+import { getTestGroupByEachDevice } from '../utils/parser';
+import { getDevices } from '../services/devices';
 
 
 export default class Dashboard extends Component {
+    constructor(props){
+        super(props)
+        console.log(' getDevices()', getDevices())
+        this.state={
+            testOnDevices : getTestGroupByEachDevice(props.testStatuses),
+            devices : getDevices()
+        }
+    }
+
+    componentWillReceiveProps(props, nextProps){
+        this.setState={
+            testOnDevices : getTestGroupByEachDevice(props.testStatuses),
+            devices : getDevices()
+        }
+    }
     render() {
-        let { devices, testResults, testCountMetrics } = this.props;
+        let { testResults, testCountMetrics,testOnDevices } = this.props;
+        let {devices} = this.state;
+
         let { countOfPass, countOfFail, countOfUnknown } = testCountMetrics;
         const totalCnt = countOfPass + countOfFail + countOfUnknown;
         const percentage = 100/totalCnt;
@@ -104,30 +123,24 @@ export default class Dashboard extends Component {
                     </ItemGrid>
                 </Grid>
                 <div className="DeviceInformationContainer">
-                <div className="DeviceInformationContainerItem">
-                <Table
-                  tableHeaderColor="warning"
-                  tableHead={["ID", "Name", "Salary", "Country"]}
-                  tableData={[
-                    [<AppleSvgIcon/>, "Dakota Rice", "$36,738", "Niger"],
-                    ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                    [<Android/>, "Sage Rodriguez", "$56,142", "Netherlands"],
-                    ["4", "Philip Chaney", "$38,735", "Korea, South"]
-                  ]}
-                />
-                </div>
-                <div className="DeviceInformationContainerItem">
-                <Table
-                  tableHeaderColor="warning"
-                  tableHead={["ID", "Name", "Salary", "Country"]}
-                  tableData={[
-                    ["1", "Dakota Rice", "$36,738", "Niger"],
-                    ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                    ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                    ["4", "Philip Chaney", "$38,735", "Korea, South"]
-                  ]}
-                />
-                </div>
+                <Grid container>
+                {devices.map((device) => {
+                        const icon = device.getOS() === 'Android' ? Android : AppleSvgIcon;
+                        const iconColor = device.getOS() === 'Android' ? 'green' :'gray'
+                        return <ItemGrid xs={12} sm={6} md={4}>
+                            <StatsCard
+                                icon={icon}
+                                iconColor={iconColor}
+                                title={`${device.getName()}, ${device.getUdid()}`}
+                                description={`${device.getState()}`}
+                                small={device.getOS()}
+                                statIcon={InfoOutline}
+                                statIconColor="info"
+                                statLink={{ text: "Get result of tests...", href: "#pablo" }}
+                            />
+                        </ItemGrid>
+                    })}
+                </Grid>
                 </div>
             </div>
         );

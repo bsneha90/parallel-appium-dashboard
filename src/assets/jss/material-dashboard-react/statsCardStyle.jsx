@@ -11,6 +11,7 @@ import {
   redCardHeader,
   blueCardHeader,
   purpleCardHeader,
+  grayCardHeader,
   cardActions,
   grayColor,
   warningColor,
@@ -33,6 +34,7 @@ const statsCardStyle = {
   redCardHeader,
   blueCardHeader,
   purpleCardHeader,
+  grayCardHeader,
   cardContent: {
     textAlign: "right",
     paddingTop: "10px",

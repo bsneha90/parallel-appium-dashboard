@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 
-export const getLatestTestStatusForEachTest = (teststatuses) => {
+const getLatestTestStatusForEachTest = (teststatuses) => {
     let latestPassTestStatus = [];
     let latestFailTestStatus = [];
     let latestUnknownTestStatus = [];
@@ -29,6 +29,15 @@ export const getLatestTestStatusForEachTest = (teststatuses) => {
         unKnownTestCases: latestUnknownTestStatus ? latestUnknownTestStatus :[]
     }
 
+}
+
+export const getTestGroupByEachDevice = (teststatuses) => {
+   const latestTestStatus = getLatestTestStatusForEachTest(teststatuses);
+   const {passTestCases,unKnownTestCases,failTestCases} = latestTestStatus
+
+   return _.groupBy(passTestCases.concat(unKnownTestCases).concat(failTestCases), (t) =>{
+        return t.deviceinfo.device.udid
+    })
 }
 
 export const getCountMetricsOfTestResults = (teststatuses) => {

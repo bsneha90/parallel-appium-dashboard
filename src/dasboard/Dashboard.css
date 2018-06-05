@@ -41,10 +41,5 @@
 .DeviceInformationContainer{
   width: 100%;
   display: flex; 
-}
-.DeviceInformationContainerItem{
-    flex:1;
-    margin: 15px;
-    box-shadow:0px 1px 4px 0px rgba(0, 0, 0, 0.14);
-    content: "\f17b";
+  margin-top: 25px;
 }

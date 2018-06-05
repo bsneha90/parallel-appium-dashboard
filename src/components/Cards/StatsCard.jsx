@@ -76,7 +76,7 @@ StatsCard.defaultProps = {
 StatsCard.propTypes = {
   classes: PropTypes.object.isRequired,
   icon: PropTypes.func.isRequired,
-  iconColor: PropTypes.oneOf(["orange", "green", "red", "blue", "purple"]),
+  iconColor: PropTypes.oneOf(["orange", "green", "red", "blue", "purple", "gray"]),
   title: PropTypes.node,
   description: PropTypes.node,
   small: PropTypes.node,

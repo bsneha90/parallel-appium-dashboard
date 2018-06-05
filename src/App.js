@@ -28,8 +28,6 @@ const testResults = [
 class App extends Component {
   constructor(props) {
     super(props);
-    let result = getTestStatuses();
-    console.log(result);
     this.state = {
       testStatuses: getTestStatuses(),
       devices: getDevices()
@@ -50,7 +48,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Parallel Appium Dashboard</h1>
         </header>
-        <Dashboard devices={devices}
+        <Dashboard testStatuses={testStatuses}
           testCountMetrics={getCountMetricsOfTestResults(testStatuses)} />
       </div>
     );
