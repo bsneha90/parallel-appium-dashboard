@@ -123,6 +123,7 @@ export default class Dashboard extends Component {
                     </ItemGrid>
                 </Grid>
                 <div className="DeviceInformationContainer">
+                <h1>Devices</h1>
                 <Grid container>
                 {devices.map((device) => {
                         const icon = device.getOS() === 'Android' ? Android : AppleSvgIcon;
@@ -132,8 +133,7 @@ export default class Dashboard extends Component {
                                 icon={icon}
                                 iconColor={iconColor}
                                 title={`${device.getName()}, ${device.getUdid()}`}
-                                description={`${device.getState()}`}
-                                small={device.getOS()}
+                                small={` Version : ${device.getOsVersion()}`}
                                 statIcon={InfoOutline}
                                 statIconColor="info"
                                 statLink={{ text: "Get result of tests...", href: "#pablo" }}
