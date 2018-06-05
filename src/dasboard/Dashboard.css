@@ -1,0 +1,50 @@
+.CardContainer{
+    width: 100%;
+    margin-top: 15px;
+    box-shadow:0px 1px 4px 0px rgba(0, 0, 0, 0.14);
+}
+
+.PieChartContainer, .RunInfoContainer{
+     width: 100%; 
+     text-align: 'start'; 
+     padding-top:2px; 
+     padding-left:15px;
+}
+
+.PieChartWrapper{
+  width: 100%;
+  display: flex; 
+  padding-bottom:5px;
+  margin-left: 5px;
+}
+
+.PieChart{
+    flex:1.2;
+}
+
+.PieChartIndex, .PieChartProgress{
+    flex:1;
+}
+
+.PieChartIndex ul, .PieChartProgress ul{
+    padding-top: 25px;
+}
+
+.PieChartIndex li, .PieChartProgress li{
+    padding: 3px;
+}
+
+.PieChartItemHeader{
+    text-align: justify;
+}
+
+.DeviceInformationContainer{
+  width: 100%;
+  display: flex; 
+}
+.DeviceInformationContainerItem{
+    flex:1;
+    margin: 15px;
+    box-shadow:0px 1px 4px 0px rgba(0, 0, 0, 0.14);
+    content: "\f17b";
+}

@@ -1,0 +1,44 @@
+let x= [
+    {
+        "_id": "5b15a6bdf8337e5fa8ea96e3",
+        "testresult": "UnKnown",
+        "testcasename": "sliderTest",
+        "deviceinfo": {
+            "device": {
+                "udid": "8409ACC6-584C-4903-A7D3-1C887E8A9EC8",
+            },
+            "port": 60523
+        },
+        "status": "Started"
+    },
+    {
+        "_id": "5b15a6c8f8337e5fa8ea96e4",
+        "testresult": "Pass",
+        "testcasename": "sliderTest2",
+        "deviceinfo": {
+            "device": {
+                "udid": "8409ACC6-584C-4903-A7D3-1C887E8A9EC8",
+            },
+            "port": 60523
+        },
+        "status": "Completed"
+    }
+];
+
+function groupBy( array , f )
+{
+  var groups = {};
+  array.forEach( function( o )
+  {
+    var group = JSON.stringify( f(o) );
+    groups[group] = groups[group] || [];
+    groups[group].push( o );  
+  });
+  return Object.keys(groups).map( function( group )
+  {
+    return groups[group]; 
+  })
+}
+
+let y = groupBy(x, (t)=>{t.testcasename, t.deviceinfo.device.udid});
+console.log(y);

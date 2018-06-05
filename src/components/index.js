@@ -79,7 +79,7 @@ import Warning from "./Typography/Warning.jsx";
 import Danger from "./Typography/Danger.jsx";
 import Small from "./Typography/Small.jsx";
 import A from "./Typography/A.jsx";
-
+import Pie from './PieChart/Pie'
 export {
   // Cards
   ChartCard,
@@ -118,5 +118,7 @@ export {
   Warning,
   Danger,
   Small,
-  A
+  A,
+  //PieChart
+  Pie
 };
