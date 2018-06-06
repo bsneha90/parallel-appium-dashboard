@@ -42,3 +42,30 @@
   width: 100%;
   margin-top: 25px;
 }
+
+.statbutton{
+    line-height: 22px;
+    font-size: 12px;
+    display: inline-block;
+    margin: 0!important;
+    width:100%;
+   background-color: white;
+   border: 0ch;
+   cursor: pointer;
+}
+
+.statbutton:hover {background-color: #DCDCDC}
+
+.statbutton:focus { outline: none;}
+
+.statbuttonResultIcon {
+     width: 1em; 
+     height: 1em;
+}
+
+.statbuttonResultIconLabel {
+    font-size:16px;
+     position:relative; 
+     top:-4px; 
+     margin-left:6px;
+}

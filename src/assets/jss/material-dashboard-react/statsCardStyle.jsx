@@ -67,7 +67,9 @@ const statsCardStyle = {
   },
   cardActions: {
     ...cardActions,
-    padding: "0!important"
+    padding: "0!important",
+    width: '100%',
+    margin:'0px',
   },
   cardStats: {
     lineHeight: "22px",

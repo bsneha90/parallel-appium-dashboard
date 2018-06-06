@@ -1,12 +1,13 @@
 export class Device {
     
-    constructor(name,udid,state, osVersion, os)
+    constructor(name,udid,state, osVersion, os, testCases=[])
     {
         this.name =name;
         this.udid = udid;
         this.state = state;
         this.osVersion = osVersion;
         this.os =os;
+        this.testCases =testCases;
     }
 
     getName(){
@@ -30,20 +31,12 @@ export class Device {
         return this.os;
     }
 
-}
+    getTestCases (){
+        return this.testCases;
+    }
 
-// "device" : {
-//     "udid" : "EFE6BCCE-B610-4FB2-A11A-861674BF6775",
-//     "name" : "iPhone 7",
-//     "state" : "Booted",
-//     "osVersion" : "11.0",
-//     "os" : "iOS",
-//     "deviceType" : "iOS 11.0",
-//     "brand" : "Not Supported",
-//     "apiLevel" : "Not Supported",
-//     "isDevice" : false,
-//     "deviceModel" : "Not Supported",
-//     "screenSize" : null,
-//     "deviceManufacturer" : null,
-//     "available" : true
-//   }
+    setTestCases(testCases){
+        this.testCases = testCases;
+    }
+
+}

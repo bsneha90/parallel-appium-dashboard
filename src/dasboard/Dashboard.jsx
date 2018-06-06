@@ -8,7 +8,8 @@ import {
 import {
     Devices,
     InfoOutline,
-    Android
+    Android,
+    ArrowForward
 } from "@material-ui/icons";
 import AppleSvgIcon from '../components/Icons/AppeSvgIcon'
 import List from "@material-ui/core/List";
@@ -18,13 +19,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import ErrorOutline from "@material-ui/icons/ErrorOutline";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import { Divider } from '@material-ui/core';
+import { Divider,Badge,Button } from '@material-ui/core';
 import './Dashboard.css'
 import PieChart from 'react-minimal-pie-chart';
 import { getTestGroupByEachDevice } from '../utils/parser';
 import { getDevices } from '../services/devices';
 
-
+const passColor = '#1ABB9C'
+const failColor = '#E74C3C'
+const unknownColor = '#3498DB'
 export default class Dashboard extends Component {
     constructor(props){
         super(props)
@@ -42,15 +45,13 @@ export default class Dashboard extends Component {
         }
     }
     render() {
-        let { testResults, testCountMetrics,testOnDevices } = this.props;
-        let {devices} = this.state;
+        let { testResults, testCountMetrics } = this.props;
+        let {devices,testOnDevices} = this.state;
 
         let { countOfPass, countOfFail, countOfUnknown } = testCountMetrics;
         const totalCnt = countOfPass + countOfFail + countOfUnknown;
         const percentage = 100/totalCnt;
-        const passColor = '#1ABB9C'
-        const failColor = '#E74C3C'
-        const unknownColor = '#3498DB'
+       
         const pieCharData = [{value:countOfPass, color:passColor },
             {value:countOfFail, color:failColor },
             {value:countOfUnknown, color:unknownColor }]
@@ -128,15 +129,20 @@ export default class Dashboard extends Component {
                 {devices.map((device) => {
                         const icon = device.getOS() === 'Android' ? Android : AppleSvgIcon;
                         const iconColor = device.getOS() === 'Android' ? 'green' :'gray'
+                        console.log(testOnDevices,'testOnDevices')
+                        const testsRunOnDevice = testOnDevices && (device.getUdid() in testOnDevices) && testOnDevices[device.getUdid()];
+                        const passCnt = testsRunOnDevice ? testsRunOnDevice.filter((t) => t.testresult === 'Pass').length : 0;
+                        const failCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Fail').length : 0;
+                        const skipCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Skip').length :0 ;
+                        console.log(testsRunOnDevice);
                         return <ItemGrid xs={12} sm={6} md={4}>
                             <StatsCard
                                 icon={icon}
                                 iconColor={iconColor}
                                 title={`${device.getName()}, ${device.getUdid()}`}
                                 small={` Version : ${device.getOsVersion()}`}
-                                statIcon={InfoOutline}
                                 statIconColor="info"
-                                statLink={{ text: "Get result of tests...", href: "#pablo" }}
+                                statText={<StatText passCnt={passCnt} failCnt= {failCnt} skipCnt={skipCnt}/>}
                             />
                         </ItemGrid>
                     })}
@@ -145,4 +151,40 @@ export default class Dashboard extends Component {
             </div>
         );
     }
+}
+
+const StatText = (props) =>{
+    let {passCnt, failCnt, skipCnt} = props
+    return(
+        <button className='statbutton' >
+        <div style={{marginTop:'3px', display:'flex'}}>
+             <div style={{flex:1, display:'flex'}}>
+                <div style={{flex:1}}> <CheckCircle style={{ color: passColor}} className="statbuttonResultIcon" /> 
+                <span className ="statbuttonResultIconLabel">{passCnt} </span>
+                </div>
+                <div style={{flex:1}}>  <ErrorOutline style={{ color: failColor}} className="statbuttonResultIcon"/>
+                <span className ="statbuttonResultIconLabel">{failCnt} </span>
+                </div>
+                <div style={{flex:1}}> <HelpOutline style={{ color: unknownColor}} className="statbuttonResultIcon"/>
+                <span className ="statbuttonResultIconLabel">{skipCnt} </span>
+              </div>
+             
+             </div>
+            <div style={{flex:1, alignItems:'flex-end', justifyItems:'end'}}> <ArrowForward style={{float:'right'}} /> </div>
+        </div>
+        </button>
+    );
+}
+
+const StatText2 = (props) =>{
+return <Badge style={{marginTop:'15px'}} badgeContent={4} color="primary">
+    <CheckCircle style={{ color: passColor}}/>
+  </Badge>
+}
+
+const StatText3 = (props) =>{
+    return <Button variant="contained" className='statbutton' >
+    <CheckCircle style={{ color: passColor}}/>
+    <ArrowForward/>
+  </Button>
 }

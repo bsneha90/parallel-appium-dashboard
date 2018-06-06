@@ -12,7 +12,7 @@ const getLatestTestStatusForEachTest = (teststatuses) => {
     latestPassTestStatus = groupTestCases['Pass'];
     latestFailTestStatus = groupTestCases['Fail'];
    
-    ('UnKnown' in groupTestCases) && groupTestCases['UnKnown'].forEach(testCase => {
+    ('Skip' in groupTestCases) && groupTestCases['Skip'].forEach(testCase => {
         console.log(testCase);
         let elementInPass = latestPassTestStatus.filter((tc) => tc.testcasename === testCase.testcasename
             && tc.deviceinfo.device.udid === testCase.deviceinfo.device.udid);
@@ -35,9 +35,10 @@ export const getTestGroupByEachDevice = (teststatuses) => {
    const latestTestStatus = getLatestTestStatusForEachTest(teststatuses);
    const {passTestCases,unKnownTestCases,failTestCases} = latestTestStatus
 
-   return _.groupBy(passTestCases.concat(unKnownTestCases).concat(failTestCases), (t) =>{
+   const r = _.groupBy(passTestCases.concat(unKnownTestCases).concat(failTestCases), (t) =>{
         return t.deviceinfo.device.udid
     })
+    return r;
 }
 
 export const getCountMetricsOfTestResults = (teststatuses) => {

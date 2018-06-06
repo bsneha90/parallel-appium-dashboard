@@ -46,15 +46,15 @@ function StatsCard({ ...props }) {
           ) : null}
         </Typography>
       </CardContent>
-      <CardActions className={classes.cardActions}>
-        <div className={classes.cardStats}>
-          <props.statIcon
+      <CardContent className={classes.cardActions}>
+        <div>
+          {props.statIcon && <props.statIcon
             className={
               classes.cardStatsIcon +
               " " +
               classes[statIconColor + "CardStatsIcon"]
             }
-          />{" "}
+          />}{" "}
           {statLink !== undefined ? (
             <a href={statLink.href} className={classes.cardStatsLink}>
               {statLink.text}
@@ -63,7 +63,7 @@ function StatsCard({ ...props }) {
             statText
           ) : null}
         </div>
-      </CardActions>
+      </CardContent>
     </Card>
   );
 }

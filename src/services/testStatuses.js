@@ -45,7 +45,7 @@ export const getTestStatuses = () => {
                         "available": true,
                         "deviceModel": "Not Supported",
                         "state": "Booted",
-                        "udid": "8409ACC6-584C-4903-A7D3-1C887E8A9EC8",
+                        "udid": "8409ACC6-584C-4903-A7D3-1C887E8A9EC9",
                         "brand": "Not Supported",
                         "apiLevel": "Not Supported"
                     },
