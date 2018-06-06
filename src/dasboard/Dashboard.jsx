@@ -93,7 +93,7 @@ export default class Dashboard extends Component {
                                             <ListItemIcon style={{ color: unknownColor }}>
                                                 <HelpOutline />
                                             </ListItemIcon >
-                                            <ListItemText primary="Pending" />
+                                            <ListItemText primary="Skip" />
                                         </ListItem>
                                     </List>
                                 </div>
@@ -101,13 +101,13 @@ export default class Dashboard extends Component {
                                     <p className='PieChartItemHeader'>Progress</p>
                                     <List className="PieChartIndexList">
                                         <ListItem>
-                                            <ListItemText primary={`${countOfPass * percentage}%`} />
+                                            <ListItemText primary={`${(countOfPass * percentage).toFixed(2)}%`} />
                                         </ListItem>
                                         <ListItem >
-                                            <ListItemText primary={`${countOfFail * percentage}%`} />
+                                            <ListItemText primary={`${(countOfFail * percentage).toFixed(2)}%`} />
                                         </ListItem>
                                         <ListItem >
-                                            <ListItemText primary={`${countOfUnknown * percentage}%`}/>
+                                            <ListItemText primary={`${(countOfUnknown * percentage).toFixed(2)}%`}/>
                                         </ListItem>
                                     </List>
                                 </div>
