@@ -51,9 +51,9 @@ class Dashboard extends Component {
 
     handleDeviceOnClick = (data) =>{
        setItem(Constants.LOCALSTORAGE.DEVICE_TESTS, JSON.stringify(data));
-       this.props.history.push('/testsOnDevice');
+       this.props.history.push(Constants.ROUTES.TESTS_ON_DEVICES);
     }
-    
+
     render() {
         let { testResults, testCountMetrics } = this.props;
         let {devices,testOnDevices} = this.state;
