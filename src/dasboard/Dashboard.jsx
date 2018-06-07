@@ -24,11 +24,15 @@ import './Dashboard.css'
 import PieChart from 'react-minimal-pie-chart';
 import { getTestGroupByEachDevice } from '../utils/parser';
 import { getDevices } from '../services/devices';
-
+import {setItem} from '../utils/LocalstorageHelper'
+import Constants from '../Constants';
+import {
+    withRouter
+  } from 'react-router-dom'
 const passColor = '#1ABB9C'
 const failColor = '#E74C3C'
 const unknownColor = '#3498DB'
-export default class Dashboard extends Component {
+class Dashboard extends Component {
     constructor(props){
         super(props)
         console.log(' getDevices()', getDevices())
@@ -44,6 +48,12 @@ export default class Dashboard extends Component {
             devices : getDevices()
         }
     }
+
+    handleDeviceOnClick = (data) =>{
+       setItem(Constants.LOCALSTORAGE.DEVICE_TESTS, JSON.stringify(data));
+       this.props.history.push('/testsOnDevice');
+    }
+    
     render() {
         let { testResults, testCountMetrics } = this.props;
         let {devices,testOnDevices} = this.state;
@@ -142,7 +152,8 @@ export default class Dashboard extends Component {
                                 title={`${device.getName()}, ${device.getUdid()}`}
                                 small={` Version : ${device.getOsVersion()}`}
                                 statIconColor="info"
-                                statText={<StatText passCnt={passCnt} failCnt= {failCnt} skipCnt={skipCnt}/>}
+                                statText={<StatText passCnt={passCnt} failCnt= {failCnt} skipCnt={skipCnt} 
+                                    onClick = {() => this.handleDeviceOnClick({udid : device.getUdid(), tests : testsRunOnDevice})}/>}
                             />
                         </ItemGrid>
                     })}
@@ -154,9 +165,9 @@ export default class Dashboard extends Component {
 }
 
 const StatText = (props) =>{
-    let {passCnt, failCnt, skipCnt} = props
+    let {passCnt, failCnt, skipCnt, onClick} = props
     return(
-        <button className='statbutton' >
+        <button className='statbutton' onClick={onClick} >
         <div style={{marginTop:'3px', display:'flex'}}>
              <div style={{flex:1, display:'flex'}}>
                 <div style={{flex:1}}> <CheckCircle style={{ color: passColor}} className="statbuttonResultIcon" /> 
@@ -188,3 +199,5 @@ const StatText3 = (props) =>{
     <ArrowForward/>
   </Button>
 }
+
+export default withRouter(Dashboard);
