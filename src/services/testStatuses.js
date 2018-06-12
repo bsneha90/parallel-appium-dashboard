@@ -5,6 +5,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6bdf8337e5fa8ea96e3",
                 "testresult": "Pass",
                 "testcasename": "sliderTest",
+                "testClassName": "SliderTest1",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",
@@ -31,6 +32,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6bdf8337e5fa8ea96e3",
                 "testresult": "Pass",
                 "testcasename": "sliderTest2",
+                "testClassName": "SliderTest",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",
@@ -57,6 +59,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6bdf8337e5fa8ea96e3",
                 "testresult": "Pass",
                 "testcasename": "sliderTest3",
+                "testClassName": "SliderTest",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",
@@ -83,6 +86,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6bdf8337e5fa8ea96e3",
                 "testresult": "Fail",
                 "testcasename": "sliderTest4",
+                "testClassName": "SliderTest",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",
@@ -109,6 +113,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6bdf8337e5fa8ea96e3",
                 "testresult": "Skip",
                 "testcasename": "sliderTest",
+                "testClassName": "SliderTest",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",
@@ -135,6 +140,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6bdf8337e5fa8ea96e3",
                 "testresult": "Skip",
                 "testcasename": "sliderTest5",
+                "testClassName": "SliderTest",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",
@@ -161,6 +167,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6bdf8337e5fa8ea96e3",
                 "testresult": "UnKnown",
                 "testcasename": "sliderTest",
+                "testClassName": "SliderTest",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",
@@ -187,6 +194,7 @@ export const getTestStatuses = () => {
                 "_id": "5b15a6c8f8337e5fa8ea96e4",
                 "testresult": "Fail",
                 "testcasename": "sliderTest",
+                "testClassName": "SliderTest",
                 "deviceinfo": {
                     "available": false,
                     "hostName": "127.0.0.1",

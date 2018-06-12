@@ -4,7 +4,17 @@ const Constants = {
     },
     ROUTES :{
         TESTS_ON_DEVICES :'/testsOnDevice'
-    }
+    },
+    TEST_RESULTS :{
+        Pass : 'Pass',
+        Fail : 'Fail',
+        Skip : 'Skip'
+    },
+    PASS_COLOR : '#1ABB9C',
+    FAIL_COLOR :'#E74C3C',
+    SKIP_COLOR : '#3498DB'
 }
+
+
 
 export default Constants;

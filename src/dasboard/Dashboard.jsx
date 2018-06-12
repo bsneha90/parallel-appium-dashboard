@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { Grid, SvgIcon } from "material-ui";
+import { Grid } from "material-ui";
 import {
     ItemGrid,
     StatsCard,
-    Table,
 } from "../components";
 import {
-    Devices,
-    InfoOutline,
     Android,
     ArrowForward
 } from "@material-ui/icons";
@@ -19,7 +16,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import ErrorOutline from "@material-ui/icons/ErrorOutline";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import { Divider,Badge,Button } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 import './Dashboard.css'
 import PieChart from 'react-minimal-pie-chart';
 import { getTestGroupByEachDevice } from '../utils/parser';
@@ -29,9 +26,9 @@ import Constants from '../Constants';
 import {
     withRouter
   } from 'react-router-dom'
-const passColor = '#1ABB9C'
-const failColor = '#E74C3C'
-const unknownColor = '#3498DB'
+const passColor = Constants.PASS_COLOR
+const failColor = Constants.FAIL_COLOR
+const unknownColor = Constants.SKIP_COLOR
 class Dashboard extends Component {
     constructor(props){
         super(props)
@@ -55,7 +52,7 @@ class Dashboard extends Component {
     }
 
     render() {
-        let { testResults, testCountMetrics } = this.props;
+        let { testCountMetrics } = this.props;
         let {devices,testOnDevices} = this.state;
 
         let { countOfPass, countOfFail, countOfUnknown } = testCountMetrics;
@@ -185,19 +182,6 @@ const StatText = (props) =>{
         </div>
         </button>
     );
-}
-
-const StatText2 = (props) =>{
-return <Badge style={{marginTop:'15px'}} badgeContent={4} color="primary">
-    <CheckCircle style={{ color: passColor}}/>
-  </Badge>
-}
-
-const StatText3 = (props) =>{
-    return <Button variant="contained" className='statbutton' >
-    <CheckCircle style={{ color: passColor}}/>
-    <ArrowForward/>
-  </Button>
 }
 
 export default withRouter(Dashboard);

@@ -52,3 +52,11 @@ export const getCountMetricsOfTestResults = (teststatuses) => {
        countOfUnknown
    }
 }
+
+export const groupTestsByTestClass = (tests) =>{
+    let groupTestCases = _.groupBy(tests, (t) => {
+        return t.testClassName;
+    });
+
+    return groupTestCases;
+}
