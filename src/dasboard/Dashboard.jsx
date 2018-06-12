@@ -32,7 +32,6 @@ const unknownColor = Constants.SKIP_COLOR
 class Dashboard extends Component {
     constructor(props){
         super(props)
-        console.log(' getDevices()', getDevices())
         this.state={
             testOnDevices : getTestGroupByEachDevice(props.testStatuses),
             devices : getDevices()
@@ -136,7 +135,6 @@ class Dashboard extends Component {
                 {devices.map((device) => {
                         const icon = device.getOS() === 'Android' ? Android : AppleSvgIcon;
                         const iconColor = device.getOS() === 'Android' ? 'green' :'gray'
-                        console.log(testOnDevices,'testOnDevices')
                         const testsRunOnDevice = testOnDevices && (device.getUdid() in testOnDevices) && testOnDevices[device.getUdid()];
                         const passCnt = testsRunOnDevice ? testsRunOnDevice.filter((t) => t.testresult === 'Pass').length : 0;
                         const failCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Fail').length : 0;

@@ -17,6 +17,12 @@ import Divider from '@material-ui/core/Divider';
 import classnames from 'classnames';
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import ErrorOutline from "@material-ui/icons/ErrorOutline";
+import HelpOutline from "@material-ui/icons/HelpOutline";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export default class TestsOnDevice extends Component {
     constructor(props){
@@ -75,11 +81,44 @@ export default class TestsOnDevice extends Component {
         return items
     }
 
+    /*{"_id":"5b15a6bdf8337e5fa8ea96e3","testresult":"Pass","testcasename":"sliderTest"
+    ,"testClassName":"SliderTest1","deviceinfo":{"available":false,"hostName":"127.0.0.1"
+    ,"chromeDriverPort":0,"localDevice":true,"device":{"deviceType":"iOS 11.0","osVersion":"11.0"
+    ,"os":"iOS","name":"iPhone X","isDevice":false,"available":true,"deviceModel":"Not Supported"
+    ,"state":"Booted","udid":"8409ACC6-584C-4903-A7D3-1C887E8A9EC8","brand":"Not Supported"
+    ,"apiLevel":"Not Supported"},"port":60523},"status":"Started"}
+    */
+
+    renderTestClassDetails =  () => {
+        const {testsGroupedByClass,selectedTest} = this.state;
+       return _.map(testsGroupedByClass[selectedTest], (test)=>{
+          return  <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography >
+                       {test.testresult === Constants.TEST_RESULTS.Pass &&
+                         <CheckCircle style={{ color: Constants.PASS_COLOR, marginRight :'1vh' }}/>}
+                        {test.testresult === Constants.TEST_RESULTS.Fail &&
+                            <ErrorOutline style={{ color: Constants.FAIL_COLOR, marginRight :'1vh' }}/>}
+                         {test.testresult === Constants.TEST_RESULTS.Skip &&
+                            <HelpOutline style={{ color: Constants.SKIP_COLOR, marginRight :'1vh' }}/>}
+                    </Typography>
+                    <Typography >{test.testcasename}</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <Typography>
+                       {JSON.stringify(test)}
+                                        </Typography>
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
+        })
+    }
+    
+
    render(){
        const tableData = this.state.tests;
        const {testsGroupedByClass,selectedTest} = this.state;
        const classNames = _.keys(testsGroupedByClass)
-        
+
        return (
            <div>
                <header className="App-header">
@@ -98,7 +137,11 @@ export default class TestsOnDevice extends Component {
                        </ItemGrid>
                        <ItemGrid xs={8} sm={8} md={8}>
                            <div className="TestClassDetails">
-
+                            <h3>Test Methods</h3>
+                            <Divider/>
+                            <div className="TestClassDetailsItemsWrapper">
+                               {this.renderTestClassDetails()}
+                            </div>
                            </div>
                        </ItemGrid>
                    </Grid>}

@@ -4,7 +4,7 @@
     margin-left: 1%;
     padding-top: 1ch;
     box-shadow:0px 1px 4px 0px rgba(0, 0, 0, 0.14);
-    height: 80vh;
+    height: 82vh;
     overflow: auto;
 }
 
@@ -37,8 +37,23 @@
 
 .TestClassDetails{
     margin-left: -30px;
+    width: 98%;
+    padding-right: 30px;
+    padding-top:1ch;
+    border: 2.1vh solid rgba(204,230,255);
+    height: 78vh;
+    justify-content: center;
+    align-items: center;
+}
+.TestClassDetails h3{
+    margin-left: 1%;
 }
 
+.TestClassDetailsItemsWrapper{
+    margin: 1%;
+    overflow: auto;
+    height: 65vh;
+}
 .TestClassListItem:hover{
     background-color:#79a6d2;
 }
@@ -55,4 +70,5 @@
     display: flex;
     flex-direction: column;
     min-height: 16vh;
+    
 }
