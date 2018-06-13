@@ -38,10 +38,10 @@
 .TestClassDetails{
     margin-left: -30px;
     width: 98%;
-    padding-right: 30px;
+    padding-right: 25px;
     padding-top:1ch;
-    border: 2.1vh solid rgba(204,230,255);
-    height: 78vh;
+    border: 1vh solid rgba(204,230,255);
+    height: 80vh;
     justify-content: center;
     align-items: center;
 }
