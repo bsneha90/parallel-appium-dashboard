@@ -8,6 +8,7 @@ import {
 } from "../../components";
 import ReactTable from "react-table";
 import { Grid } from 'material-ui';
+import { getParsedDevice } from '../../utils/DeviceParser';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -23,6 +24,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Paper from '@material-ui/core/Paper';
 
 export default class TestsOnDevice extends Component {
     constructor(props){
@@ -118,14 +120,43 @@ export default class TestsOnDevice extends Component {
        const tableData = this.state.tests;
        const {testsGroupedByClass,selectedTest} = this.state;
        const classNames = _.keys(testsGroupedByClass)
-
+      const deviceInfo =   getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device);
        return (
            <div>
-               <header className="App-header">
-                   <h1 className="App-title">Parallel Appium Dashboard</h1>
-               </header>
+               <div className="App">
+                   <header className="App-header">
+                       <h1 className="App-title">Parallel Appium Dashboard</h1>
+                   </header>
+               </div>
                <div className="TestsOnDevicesContainer">
-
+               <div className="DeviceInfoWrapper">
+                   <Paper elevation={4} className="DeviceInfoContainer">
+                       <Typography variant="headline" component="h3" className="DeviceInfoHeader">
+                           {`${deviceInfo.getName()} `}
+                       </Typography>
+                       <div className="DeviceInfoDetails">
+                            <Typography component="p" className="DeviceIdDetails" >
+                               {`ID - ${deviceInfo.getUdid()}`}
+                           </Typography>
+                           <Typography component="p" className="DeviceDetails2" >
+                               {`Version : ${deviceInfo.getOsVersion()}`}
+                           </Typography>
+                           <Typography component="p" className="DeviceDetails3" >
+                               {`Host - 127.0.0.1`}
+                           </Typography>
+                       </div>
+                   </Paper> 
+                   <Paper elevation={4} className="DeviceInfoContainer">
+                       <Typography variant="headline" component="h6" className="DeviceInfoHeader">
+                            Running Test
+                       </Typography>
+                       <div className="DeviceInfoDetails">
+                            <Typography component="p" className="DeviceIdDetails" >
+                               Test Name
+                           </Typography>
+                       </div>
+                   </Paper> 
+                   </div>
                    {this.state.tests.length > 0 && <Grid container>
                        <ItemGrid xs={4} sm={4} md={4}>
                            <div className="TestClassesList">
