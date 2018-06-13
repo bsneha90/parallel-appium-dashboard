@@ -48,6 +48,13 @@
   margin-top: 25px;
 }
 
+.DeviceInformationContainerNoDevices{
+    min-height: 10vh;
+    padding: 10vh;
+    justify-self: center;
+    align-self: center;
+}
+
 .statbutton{
     line-height: 22px;
     font-size: 12px;

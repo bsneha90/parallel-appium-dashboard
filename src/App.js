@@ -13,24 +13,28 @@ class App extends Component {
     super(props);
     this.state = {
       testStatuses: null,
-      devices: getDevices()
+      devices: null
     }
   }
 
   componentWillMount(){
     getTestStatuses(this.getTestStatusesSuccessCallback)
+    getDevices(this.getDevicesSuccessCallback)
   }
 
   componentWillReceiveProps() {
-    this.setState({
-      testStatuses: getTestStatuses(),
-      devices: getDevices()
-    })
+    getTestStatuses(this.getTestStatusesSuccessCallback)
+    getDevices(this.getDevicesSuccessCallback)
   }
 
   getTestStatusesSuccessCallback = (data) =>{
     this.setState({
       testStatuses: data,
+    })
+  }
+  getDevicesSuccessCallback = (data) =>{
+    this.setState({
+      devices :data
     })
   }
 
@@ -42,7 +46,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Parallel Appium Dashboard</h1>
         </header>
-        <Dashboard testStatuses={testStatuses}
+        <Dashboard testStatuses={testStatuses} devices ={devices}
           testCountMetrics={getCountMetricsOfTestResults(testStatuses)} />
       </div>
     );

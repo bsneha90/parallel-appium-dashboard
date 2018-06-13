@@ -34,14 +34,12 @@ class Dashboard extends Component {
         super(props)
         this.state={
             testOnDevices : getTestGroupByEachDevice(props.testStatuses),
-            devices : getDevices()
         }
     }
 
     componentWillReceiveProps(props, nextProps){
         this.setState={
             testOnDevices : getTestGroupByEachDevice(props.testStatuses),
-            devices : getDevices()
         }
     }
 
@@ -51,9 +49,10 @@ class Dashboard extends Component {
     }
 
     render() {
-        let { testCountMetrics } = this.props;
-        let {devices,testOnDevices} = this.state;
-        console.log(testOnDevices,'testOnDevices')
+        let { testCountMetrics,devices } = this.props;
+        let {testOnDevices} = this.state;
+        
+        console.log(devices,'testOnDevices')
         let { countOfPass, countOfFail, countOfUnknown } = testCountMetrics;
         const totalCnt = countOfPass + countOfFail + countOfUnknown;
         const percentage = 100/totalCnt;
@@ -136,7 +135,8 @@ class Dashboard extends Component {
                 <div className="DeviceInformationContainer">
                 <h1>Devices</h1>
                 <Grid container>
-                {devices.map((device) => {
+                { devices ==null && <div className="DeviceInformationContainerNoDevices">No devices found</div>}
+                {devices && devices.map((device) => {
                         const icon = device.getOS() === 'Android' ? Android : AppleSvgIcon;
                         const iconColor = device.getOS() === 'Android' ? 'green' :'gray'
                         const testsRunOnDevice = testOnDevices && (device.getUdid() in testOnDevices) && testOnDevices[device.getUdid()];
