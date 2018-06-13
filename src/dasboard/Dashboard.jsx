@@ -53,7 +53,7 @@ class Dashboard extends Component {
     render() {
         let { testCountMetrics } = this.props;
         let {devices,testOnDevices} = this.state;
-
+        console.log(testOnDevices,'testOnDevices')
         let { countOfPass, countOfFail, countOfUnknown } = testCountMetrics;
         const totalCnt = countOfPass + countOfFail + countOfUnknown;
         const percentage = 100/totalCnt;
@@ -66,9 +66,12 @@ class Dashboard extends Component {
                 <Grid container>
                     <ItemGrid xs={12} sm={8} md={6}>
                         <div className='CardContainer'>
+                       
                             <div className="PieChartContainer">
                                 <h3>Metrics</h3></div>
                             <Divider />
+                            { testOnDevices ==null && <div className="PieChartContainerNoTests">No tests found</div>}
+                            { testOnDevices && <div>
                             <div className="PieChartWrapper">
                                 <div className="PieChart">
                                     <p className='PieChartItemHeader'>Chart</p>
@@ -118,6 +121,7 @@ class Dashboard extends Component {
                                     </List>
                                 </div>
                             </div>
+                            </div>}
                         </div>
                     </ItemGrid>
                     <ItemGrid xs={12} sm={8} md={6}>

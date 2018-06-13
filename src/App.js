@@ -12,9 +12,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      testStatuses: getTestStatuses(),
+      testStatuses: null,
       devices: getDevices()
     }
+  }
+
+  componentWillMount(){
+    getTestStatuses(this.getTestStatusesSuccessCallback)
   }
 
   componentWillReceiveProps() {
@@ -23,6 +27,13 @@ class App extends Component {
       devices: getDevices()
     })
   }
+
+  getTestStatusesSuccessCallback = (data) =>{
+    this.setState({
+      testStatuses: data,
+    })
+  }
+
 
   render() {
     const { testStatuses, devices } = this.state;

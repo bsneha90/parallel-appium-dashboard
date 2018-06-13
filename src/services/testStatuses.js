@@ -1,4 +1,5 @@
-export const getTestStatuses = () => {
+import axios from 'axios'
+export const  getTestStatuses =  (successCallback, errorCallback =() =>{}) => {
     let a = 
         [
             {
@@ -219,5 +220,9 @@ export const getTestStatuses = () => {
             }
         ];
 
-        return a;
+        
+ axios.get('http://localhost:3000/testresults')
+   .then((response) => successCallback(response.data))
+   .catch((err) => console.log(err))
+        
 }

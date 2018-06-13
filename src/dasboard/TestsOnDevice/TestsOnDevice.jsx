@@ -117,10 +117,8 @@ export default class TestsOnDevice extends Component {
     
 
    render(){
-       const tableData = this.state.tests;
        const {testsGroupedByClass,selectedTest} = this.state;
-       const classNames = _.keys(testsGroupedByClass)
-      const deviceInfo =   getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device);
+      const deviceInfo =   selectedTest && getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device);
        return (
            <div>
                <div className="App">
@@ -129,7 +127,7 @@ export default class TestsOnDevice extends Component {
                    </header>
                </div>
                <div className="TestsOnDevicesContainer">
-               <div className="DeviceInfoWrapper">
+               {selectedTest &&  <div className="DeviceInfoWrapper">
                    <Paper elevation={4} className="DeviceInfoContainer">
                        <Typography variant="headline" component="h3" className="DeviceInfoHeader">
                            {`${deviceInfo.getName()} `}
@@ -156,8 +154,8 @@ export default class TestsOnDevice extends Component {
                            </Typography>
                        </div>
                    </Paper> 
-                   </div>
-                   {this.state.tests.length > 0 && <Grid container>
+                   </div>}
+                   {selectedTest && <Grid container>
                        <ItemGrid xs={4} sm={4} md={4}>
                            <div className="TestClassesList">
                                <h3>Tests</h3>
@@ -169,15 +167,15 @@ export default class TestsOnDevice extends Component {
                        <ItemGrid xs={8} sm={8} md={8}>
                            <div className="TestClassDetails">
                             <h3>Test Methods</h3>
-                            <Divider/>
                             <div className="TestClassDetailsItemsWrapper">
                                {this.renderTestClassDetails()}
                             </div>
                            </div>
                        </ItemGrid>
                    </Grid>}
-                   {this.state.tests.length === 0 && <p>No tests found</p>}
+                   {selectedTest===undefined && <div>No tests found</div>}
                </div>
+              
            </div>)
    }
 
