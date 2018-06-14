@@ -30,6 +30,14 @@ import {
 const passColor = Constants.PASS_COLOR
 const failColor = Constants.FAIL_COLOR
 const unknownColor = Constants.SKIP_COLOR
+const RunnerInfoItem =(props) =>{
+        return(
+            <div className="RunInfoItem">
+                        <span className="RunInfoTitle">{props.title}</span>
+                        <span className="RunInfoDetail">{props.detail}</span>
+            </div>
+        )
+}
 class Dashboard extends Component {
     constructor(props){
         super(props)
@@ -54,15 +62,17 @@ class Dashboard extends Component {
         return(
             <div className="RunInfoWrapper">
             {envInfo && <div>
-                    <div className="RunInfoItem">{`Runner : ${envInfo.Runner}`}</div>
-                    <div className="RunInfoItem">{`Selenium Version : ${envInfo.SeleniumVersion}`}</div>
-                    <div className="RunInfoItem">{`Appium Vesrion : ${envInfo.AppiumServer}`}</div>
-                    <div className="RunInfoItem">{`Appium Client Version : ${envInfo.AppiumClient}`}</div>
-                    <div className="RunInfoItem">{`No of devices : ${envInfo['Total Devices']}`}</div>
+                    <RunnerInfoItem title="Runner" detail={envInfo.Runner}/>
+                    <RunnerInfoItem title="Selenium Version" detail={envInfo.SeleniumVersion}/>
+                    <RunnerInfoItem title="Appium Vesrion" detail={envInfo.AppiumServer}/>
+                    <RunnerInfoItem title="Appium Client Version" detail={envInfo.AppiumClient}/>
+                    <RunnerInfoItem title="No of devices" detail={envInfo['Total Devices']}/>
             </div>}
            </div>
         )
     }
+
+   
 
     render() {
         let { testCountMetrics,devices } = this.props;
@@ -142,7 +152,7 @@ class Dashboard extends Component {
                     <ItemGrid xs={12} sm={8} md={6}>
                         <div className='CardContainer'>
                             <div className="RunInfoContainer">
-                                <h3>Run Info</h3>
+                                <h3>Runner Info</h3>
                                 <Divider/>
                                 {this.renderRunInfo()}
                             </div>
