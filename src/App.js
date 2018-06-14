@@ -7,19 +7,23 @@ import { getCountMetricsOfTestResults } from './utils/parser'
 
 import { getDevices } from './services/devices'
 import { getTestStatuses } from './services/testStatuses'
+import {getEnvInfo} from './services/envInfo'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       testStatuses: null,
-      devices: null
+      devices: null,
+      envInfo:null,
     }
   }
 
   componentWillMount(){
     getTestStatuses(this.getTestStatusesSuccessCallback)
     getDevices(this.getDevicesSuccessCallback)
+    getEnvInfo(this.getEnvInfoSuccessCallback)
+
   }
 
   componentWillReceiveProps() {
@@ -38,15 +42,21 @@ class App extends Component {
     })
   }
 
+  getEnvInfoSuccessCallback = (data) =>{
+    this.setState({
+      envInfo :data[0]
+    })
+  }
+
 
   render() {
-    const { testStatuses, devices } = this.state;
+    const { testStatuses, devices,envInfo } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Parallel Appium Dashboard</h1>
         </header>
-        <Dashboard testStatuses={testStatuses} devices ={devices}
+        <Dashboard testStatuses={testStatuses} devices ={devices} envInfo={envInfo}
           testCountMetrics={getCountMetricsOfTestResults(testStatuses)} />
       </div>
     );

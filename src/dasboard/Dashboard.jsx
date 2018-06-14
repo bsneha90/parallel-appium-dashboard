@@ -3,6 +3,7 @@ import { Grid } from "material-ui";
 import {
     ItemGrid,
     StatsCard,
+    RegularCard
 } from "../components";
 import {
     Android,
@@ -46,6 +47,21 @@ class Dashboard extends Component {
     handleDeviceOnClick = (data) =>{
        setItem(Constants.LOCALSTORAGE.DEVICE_TESTS, JSON.stringify(data));
        this.props.history.push(Constants.ROUTES.TESTS_ON_DEVICES);
+    }
+
+    renderRunInfo = () =>{
+        let {envInfo}= this.props;
+        return(
+            <div className="RunInfoWrapper">
+            {envInfo && <div>
+                    <div className="RunInfoItem">{`Runner : ${envInfo.Runner}`}</div>
+                    <div className="RunInfoItem">{`Selenium Version : ${envInfo.SeleniumVersion}`}</div>
+                    <div className="RunInfoItem">{`Appium Vesrion : ${envInfo.AppiumServer}`}</div>
+                    <div className="RunInfoItem">{`Appium Client Version : ${envInfo.AppiumClient}`}</div>
+                    <div className="RunInfoItem">{`No of devices : ${envInfo['Total Devices']}`}</div>
+            </div>}
+           </div>
+        )
     }
 
     render() {
@@ -127,6 +143,8 @@ class Dashboard extends Component {
                         <div className='CardContainer'>
                             <div className="RunInfoContainer">
                                 <h3>Run Info</h3>
+                                <Divider/>
+                                {this.renderRunInfo()}
                             </div>
                             <Divider />
                         </div>
