@@ -47,9 +47,10 @@ class Dashboard extends Component {
     }
 
     componentWillReceiveProps(props, nextProps){
-        this.setState={
-            testOnDevices : getTestGroupByEachDevice(props.testStatuses),
-        }
+        let result = getTestGroupByEachDevice(props.testStatuses)
+        this.setState({
+            testOnDevices : result
+        })
     }
 
     handleDeviceOnClick = (data) =>{
@@ -180,7 +181,7 @@ class Dashboard extends Component {
                                 small={` Version : ${device.getOsVersion()}`}
                                 statIconColor="info"
                                 statText={<StatText passCnt={passCnt} failCnt= {failCnt} skipCnt={skipCnt} 
-                                    onClick = {() => this.handleDeviceOnClick({udid : device.getUdid(), tests : testsRunOnDevice})}/>}
+                                    onClick = {() => this.handleDeviceOnClick({udid : device.getUdid()})}/>}
                             />
                         </ItemGrid>
                     })}

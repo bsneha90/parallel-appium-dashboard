@@ -25,17 +25,29 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
-
+import {getTestStatusForDevice} from '../../services/testStatuses'
 export default class TestsOnDevice extends Component {
     constructor(props){
         super(props);
         let data = this.getDeviceDataFromLocalstorage()
-        const groupedTests = groupTestsByTestClass(data.tests)
         this.state={
-            tests : getParsedTests(data.tests),
-            testsGroupedByClass : groupedTests,
-            selectedTest : _.keys(groupedTests)[0]
+            udid: data.udid,
+            testsGroupedByClass : null,
+            selectedTest : null
         }
+    }
+
+    componentWillMount(){
+        const {udid} = this.state
+        getTestStatusForDevice(udid,this.getTestStatusForDeviceSuccessCallback)
+    }
+
+    getTestStatusForDeviceSuccessCallback = (data) =>{
+        let groupedTests = groupTestsByTestClass(data);
+        this.setState({
+            testsGroupedByClass:groupedTests,
+            selectedTest :  _.keys(groupedTests)[0]
+        })
     }
 
     getDeviceDataFromLocalstorage (){
@@ -104,7 +116,7 @@ export default class TestsOnDevice extends Component {
                          {test.testresult === Constants.TEST_RESULTS.Skip &&
                             <HelpOutline style={{ color: Constants.SKIP_COLOR, marginRight :'1vh' }}/>}
                     </Typography>
-                    <Typography >{test.testcasename}</Typography>
+                    <Typography >{test.testMethodName}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Typography>
@@ -117,7 +129,7 @@ export default class TestsOnDevice extends Component {
     
 
    render(){
-       const {testsGroupedByClass,selectedTest} = this.state;
+      const {testsGroupedByClass,selectedTest} = this.state;
       const deviceInfo =   selectedTest && getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device);
        return (
            <div>
