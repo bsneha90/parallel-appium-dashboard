@@ -4,7 +4,7 @@ import Dashboard from "./dasboard/Dashboard";
 import { Device } from './models/device';
 import { Test } from './models/testResult';
 import { getCountMetricsOfTestResults } from './utils/parser'
-
+import logo from './logo.svg';
 import { getDevices } from './services/devices'
 import { getTestStatuses } from './services/testStatuses'
 import {getEnvInfo} from './services/envInfo'
@@ -54,7 +54,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Parallel Appium Dashboard</h1>
+        <img src={logo} className="App-logo"  alt="Parallel Appium Dashboard"/> 
+        <h1 className="App-title"> Parallel Appium Dashboard</h1>
+  
         </header>
         <Dashboard testStatuses={testStatuses} devices ={devices} envInfo={envInfo}
           testCountMetrics={getCountMetricsOfTestResults(testStatuses)} />

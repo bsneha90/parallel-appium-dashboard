@@ -27,6 +27,8 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
 import {getTestStatusForDevice} from '../../services/testStatuses'
+import logo from '../../logo.svg';
+
 const ExpansionPanelDetailsItem =(props) =>{
     return(
         <div className="TestDetailExpansionPanelItem">
@@ -156,7 +158,8 @@ export default class TestsOnDevice extends Component {
            <div>
                <div className="App">
                    <header className="App-header">
-                       <h1 className="App-title">Parallel Appium Dashboard</h1>
+                       <img src={logo} className="App-logo" alt="Parallel Appium Dashboard" />
+                       <h1 className="App-title"> Parallel Appium Dashboard</h1>
                    </header>
                </div>
                <div className="TestsOnDevicesContainer">
