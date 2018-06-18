@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import Constants from '../Constants';
 
 
 const getLatestTestStatusForEachTest = (teststatuses) => {
@@ -29,6 +30,25 @@ const getLatestTestStatusForEachTest = (teststatuses) => {
         unKnownTestCases: latestUnknownTestStatus ? latestUnknownTestStatus :[]
     }
 
+}
+
+export const getTestsWithLatestStatus = (tests) =>{
+    const latestTestStatus = getLatestTestStatusForEachTest(tests);
+    const {passTestCases,unKnownTestCases,failTestCases} = latestTestStatus
+    return passTestCases.concat(unKnownTestCases).concat(failTestCases);
+}
+
+export const getCurrentRunningTest = (tests) =>{
+    let runningTest =null
+    if(tests)
+    {
+        const runningTests=  tests && getTestsWithLatestStatus(tests).filter(t=> t.status === Constants.TEST_STARTED_STATUS);
+        if(runningTests && runningTests.length>0)
+            runningTest = runningTests[0];
+        
+    }
+    
+    return runningTest;
 }
 
 export const getTestGroupByEachDevice = (teststatuses) => {

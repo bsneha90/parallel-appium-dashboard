@@ -12,7 +12,9 @@ const Constants = {
     },
     PASS_COLOR : '#1ABB9C',
     FAIL_COLOR :'#E74C3C',
-    SKIP_COLOR : '#3498DB'
+    SKIP_COLOR : '#3498DB',
+
+    TEST_STARTED_STATUS :'Completed'
 }
 
 

@@ -109,3 +109,30 @@
 .DeviceInfoWrapper{
     display: flex;
 }
+
+.TestDetailExpansionPanel{
+    display: flex;
+    flex-direction: column;
+}
+.TestDetailExpansionPanelItem{
+    flex:1;
+    padding: 1vh;
+    display: flex;
+}
+.TestDetailExpansionPanelItemTitle{
+    flex:1;
+
+}
+
+.TestDetailExpansionPanelItemDetail{
+    flex:1;
+}
+
+.TestSummaryExpansionPanel{
+    display: flex;
+   
+}
+.TestSummaryExpansionPanelItem{
+    padding-right:8vh;
+    float: right;
+}
