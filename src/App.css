@@ -2,7 +2,7 @@
   text-align: center;
 }
 .App-logo {
-  height: 35px;
+  height: 50px;
   display: inline;
 }
 
@@ -22,7 +22,8 @@
   display: inline; 
   color:purple;
   position: relative;
-  top: -8px;
+  top: -12px;
+  margin-left: 0.5vw;
 }
 
 .App-intro {

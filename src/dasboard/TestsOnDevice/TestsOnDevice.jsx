@@ -5,6 +5,7 @@ import { getParsedTests } from '../../utils/TestParser';
 import {groupTestsByTestClass, getTestsWithLatestStatus, getCurrentRunningTest} from '../../utils/parser';
 import {
     ItemGrid,
+    AppHeader
 } from "../../components";
 import ReactTable from "react-table";
 import { Grid } from 'material-ui';
@@ -135,8 +136,9 @@ export default class TestsOnDevice extends Component {
                    </Typography>
                    <div className="TestSummaryExpansionPanel">
                         <Typography className="TestSummaryExpansionPanelItem">{test.testMethodName}</Typography>
-                        <Typography className="TestSummaryExpansionPanelItem">{`Status : ${test.status}`}</Typography>
-                        <Typography className="TestSummaryExpansionPanelItem">{`Run Time : ${test.startTime} - ${test.endTime} `}</Typography>
+                        <Typography className="TestSummaryExpansionPanelItem">{`Start time: ${test.startTime} `}</Typography>
+                        <Typography className="TestSummaryExpansionPanelItem">{`End time: ${test.startTime} `}</Typography>
+                        <Typography className="TestSummaryExpansionPanelItem">{`Duration: 22m `}</Typography>
                    </div>
                </ExpansionPanelSummary>
                <Divider/>
@@ -157,10 +159,7 @@ export default class TestsOnDevice extends Component {
        return (
            <div>
                <div className="App">
-                   <header className="App-header">
-                       <img src={logo} className="App-logo" alt="Parallel Appium Dashboard" />
-                       <h1 className="App-title"> Parallel Appium Dashboard</h1>
-                   </header>
+                  <AppHeader/>
                </div>
                <div className="TestsOnDevicesContainer">
                {selectedTest &&  <div className="DeviceInfoWrapper">

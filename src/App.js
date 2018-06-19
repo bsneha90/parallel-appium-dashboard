@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import Dashboard from "./dasboard/Dashboard";
-import { Device } from './models/device';
-import { Test } from './models/testResult';
+
 import { getCountMetricsOfTestResults } from './utils/parser'
 import logo from './logo.svg';
 import { getDevices } from './services/devices'
 import { getTestStatuses } from './services/testStatuses'
 import {getEnvInfo} from './services/envInfo'
-
+import {AppHeader} from './components'
 class App extends Component {
   constructor(props) {
     super(props);
@@ -53,11 +52,7 @@ class App extends Component {
     const { testStatuses, devices,envInfo } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-        <img src={logo} className="App-logo"  alt="Parallel Appium Dashboard"/> 
-        <h1 className="App-title"> Parallel Appium Dashboard</h1>
-  
-        </header>
+       <AppHeader/>
         <Dashboard testStatuses={testStatuses} devices ={devices} envInfo={envInfo}
           testCountMetrics={getCountMetricsOfTestResults(testStatuses)} />
       </div>
