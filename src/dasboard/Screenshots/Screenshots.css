@@ -25,9 +25,9 @@
     width: 98%;
     padding-right: 25px;
     padding-top:1ch;
-    height: 75vh;
     justify-content: center;
     align-items: center;
+    overflow: auto;
 }
 
 .ScreenshotsContainer h3{
@@ -37,5 +37,33 @@
 .ScreenshotsWrapper{
     margin: 1%;
     overflow: auto;
-    height: 65vh;
 }
+.ScreenshotsWrapper::after{
+    clear: both;
+    display: table;
+}
+.ScreenshotsWrapperItem{
+    margin: 1%;
+    flex:1;
+    
+}
+
+.column img{
+    height: 400px;
+    width: 90%;
+    object-fit: contain;
+}
+
+.column {
+    float: left;
+    width: 25%;
+    padding:2vw;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+

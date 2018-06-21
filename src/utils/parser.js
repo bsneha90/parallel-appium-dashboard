@@ -80,3 +80,10 @@ export const groupTestsByTestClass = (tests) =>{
 
     return groupTestCases;
 }
+
+export const groupTestsByScreenPaths = (tests) =>{
+    let testsWithLatestStatus = tests.filter(t=>t.status ==='Completed');
+    
+
+    return testsWithLatestStatus;
+}
