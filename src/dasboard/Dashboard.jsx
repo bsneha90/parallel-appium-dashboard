@@ -189,8 +189,8 @@ class Dashboard extends Component {
                 <Grid container>
                 { devices ==null && <div className="DeviceInformationContainerNoDevices">No devices found</div>}
                 {devices && devices.map((device) => {
-                        const icon = device.getOS() === 'Android' ? Android : AppleSvgIcon;
-                        const iconColor = device.getOS() === 'Android' ? 'green' :'gray'
+                        const icon = device.getOS().toLowerCase() === 'android' ? Android : AppleSvgIcon;
+                        const iconColor = device.getOS().toLowerCase() === 'android' ? 'green' :'gray'
                         const testsRunOnDevice = testOnDevices && (device.getUdid() in testOnDevices) && testOnDevices[device.getUdid()];
                         const passCnt = testsRunOnDevice ? testsRunOnDevice.filter((t) => t.testresult === 'Pass').length : 0;
                         const failCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Fail').length : 0;
