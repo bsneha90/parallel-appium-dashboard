@@ -3,7 +3,8 @@ const Constants = {
         DEVICE_TESTS :'DEVICE_TESTS'
     },
     ROUTES :{
-        TESTS_ON_DEVICES :'/testsOnDevice'
+        TESTS_ON_DEVICES :'/testsOnDevice',
+        DISTRIBUTED_TESTS_SCREENSHOTS :'/screenshots'
     },
     TEST_RESULTS :{
         Pass : 'Pass',

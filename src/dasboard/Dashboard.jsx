@@ -61,6 +61,10 @@ class Dashboard extends Component {
        this.props.history.push(Constants.ROUTES.TESTS_ON_DEVICES);
     }
 
+    handleScreenshotsOnClick = () =>{
+        this.props.history.push(Constants.ROUTES.DISTRIBUTED_TESTS_SCREENSHOTS);
+     }
+
     renderRunInfo = () =>{
         let {envInfo}= this.props;
         return(
@@ -172,7 +176,7 @@ class Dashboard extends Component {
                                 <h3>Screenshot(s) per test</h3>
                                 <Divider/>
                                 <Button className="ScreenshotImageButton" >
-                                    <img src={Screenshot} className="ScreenshotImage" />
+                                    <img src={Screenshot} className="ScreenshotImage" onClick={this.handleScreenshotsOnClick}/>
                                 </Button>
                                
                             </div>
