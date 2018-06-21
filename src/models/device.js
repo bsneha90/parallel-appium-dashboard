@@ -1,6 +1,6 @@
 export class Device {
     
-    constructor(name,udid,state, osVersion, os, testCases=[])
+    constructor(name,udid,state, osVersion, os, hostName, testCases=[])
     {
         this.name =name;
         this.udid = udid;
@@ -8,6 +8,7 @@ export class Device {
         this.osVersion = osVersion;
         this.os =os;
         this.testCases =testCases;
+        this.hostName = hostName
     }
 
     getName(){
@@ -31,6 +32,10 @@ export class Device {
         return this.os;
     }
 
+    getHostName(){
+        return this.hostName;
+    }
+
     getTestCases (){
         return this.testCases;
     }
@@ -38,5 +43,7 @@ export class Device {
     setTestCases(testCases){
         this.testCases = testCases;
     }
+
+    
 
 }

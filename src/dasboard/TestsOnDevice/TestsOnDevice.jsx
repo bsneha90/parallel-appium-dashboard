@@ -5,7 +5,8 @@ import { getParsedTests } from '../../utils/TestParser';
 import {groupTestsByTestClass, getTestsWithLatestStatus, getCurrentRunningTest} from '../../utils/parser';
 import {
     ItemGrid,
-    AppHeader
+    AppHeader,
+    TextFileReader
 } from "../../components";
 import ReactTable from "react-table";
 import { Grid } from 'material-ui';
@@ -29,7 +30,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
 import {getTestStatusForDevice} from '../../services/testStatuses'
 import logo from '../../logo.svg';
-
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Screenshot from '../../Screenshot.svg'
+import IconButton from '@material-ui/core/IconButton';
+import Modal from '@material-ui/core/Modal';
 const ExpansionPanelDetailsItem =(props) =>{
     return(
         <div className="TestDetailExpansionPanelItem">
@@ -46,7 +52,8 @@ export default class TestsOnDevice extends Component {
             udid: data.udid,
             testsGroupedByClass : null,
             selectedTest : null,
-            currentRunningTest : null
+            currentRunningTest : null,
+            screenShotModalOpen :false,
         }
     }
 
@@ -113,6 +120,18 @@ export default class TestsOnDevice extends Component {
         return items
     }
 
+    handleClose = () =>{
+        this.setState({
+            screenShotModalOpen :false
+        })
+    }
+
+    handleOpenScreenshotModal = () =>{
+        this.setState({
+            screenShotModalOpen :true
+        })
+    }
+
     /*{"_id":"5b15a6bdf8337e5fa8ea96e3","testresult":"Pass","testcasename":"sliderTest"
     ,"testClassName":"SliderTest1","deviceinfo":{"available":false,"hostName":"127.0.0.1"
     ,"chromeDriverPort":0,"localDevice":true,"device":{"deviceType":"iOS 11.0","osVersion":"11.0"
@@ -124,7 +143,7 @@ export default class TestsOnDevice extends Component {
     renderTestClassDetails =  () => {
         const {testsGroupedByClass,selectedTest} = this.state;
        return _.map(getTestsWithLatestStatus(testsGroupedByClass[selectedTest]), (test)=>{
-           return <ExpansionPanel>
+           return <ExpansionPanel className="TestExpansionPanel">
                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                    <Typography >
                        {test.testresult === Constants.TEST_RESULTS.Pass &&
@@ -142,12 +161,21 @@ export default class TestsOnDevice extends Component {
                    </div>
                </ExpansionPanelSummary>
                <Divider/>
+               <div className="TestDetailExpansionPanelHeader">
+               <h3 className="TestDetailExpansionPanelHeaderText">ADB Logs</h3> 
+                   <IconButton className="TestDetailExpansionPanelHeaderButton" onClick={() => {this.setState({
+                       screenShotModalOpen:true
+                   })}}>
+                       <img src={Screenshot} className="TestDetailExpansionPanelHeaderScreenshotImage" />
+                   </IconButton>
+               </div>
+               <Divider/>
                <ExpansionPanelDetails>
                    <div className="TestDetailExpansionPanel">
-                       <p>Log comes here (To be implemented) </p>
-                       <p>Screen shot model popup link comes here  (To be implemented)</p>
+                       <TextFileReader url="http://localhost:31338/humans.txt" />
                    </div>
                </ExpansionPanelDetails>
+               <Divider />
            </ExpansionPanel>
         })
     }
@@ -155,12 +183,25 @@ export default class TestsOnDevice extends Component {
 
    render(){
       const {testsGroupedByClass,selectedTest,currentRunningTest} = this.state;
-      const deviceInfo =   selectedTest && getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device);
+      const deviceInfo =   selectedTest && getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device,
+            testsGroupedByClass[selectedTest][0].deviceinfo.hostName);
        return (
            <div>
+               <Modal
+                   aria-labelledby="simple-modal-title"
+                   aria-describedby="simple-modal-description"
+                   open={this.state.screenShotModalOpen}
+                   onClose={this.handleClose}>
+                   <div className="ScreenshotModalContainer">
+                       <img src="http://localhost:31338/1.jpeg"/>
+                       <img src="http://localhost:31338/2.jpeg"/>
+                       <img src="http://localhost:31338/3.jpeg"/>
+                   </div>
+               </Modal>
                <div className="App">
                   <AppHeader/>
                </div>
+               
                <div className="TestsOnDevicesContainer">
                {selectedTest &&  <div className="DeviceInfoWrapper">
                    <Paper elevation={4} className="DeviceInfoContainer">
@@ -175,7 +216,7 @@ export default class TestsOnDevice extends Component {
                                {`Version : ${deviceInfo.getOsVersion()}`}
                            </Typography>
                            <Typography component="p" className="DeviceDetails3" >
-                               {`Host - 127.0.0.1`}
+                               {`Host IP : ${deviceInfo.getHostName()}`}
                            </Typography>
                        </div>
                    </Paper> 
@@ -214,6 +255,8 @@ export default class TestsOnDevice extends Component {
                    {selectedTest===undefined && <div>No tests found</div>}
                </div>
               
+             
+
            </div>)
    }
 

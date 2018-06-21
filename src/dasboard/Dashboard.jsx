@@ -27,6 +27,9 @@ import Constants from '../Constants';
 import {
     withRouter
   } from 'react-router-dom'
+import Screenshot from '../Screenshot.svg'
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 const passColor = Constants.PASS_COLOR
 const failColor = Constants.FAIL_COLOR
 const unknownColor = Constants.SKIP_COLOR
@@ -76,7 +79,7 @@ class Dashboard extends Component {
    
 
     render() {
-        let { testCountMetrics,devices } = this.props;
+        let { testCountMetrics,devices,envInfo } = this.props;
         let {testOnDevices} = this.state;
         
         console.log(devices,'testOnDevices')
@@ -87,10 +90,12 @@ class Dashboard extends Component {
         const pieCharData = [{value:countOfPass, color:passColor },
             {value:countOfFail, color:failColor },
             {value:countOfUnknown, color:unknownColor }]
+        const isParallelRunner = false//envInfo ? (envInfo.Runner === 'parallel' ? true : false) :true;
+        let itemGridCounter = isParallelRunner ? 12 : 8;
         return (
             <div>
                 <Grid container>
-                    <ItemGrid xs={12} sm={8} md={6}>
+                    <ItemGrid xs={12} sm={6} md={6}>
                         <div className='CardContainer'>
                        
                             <div className="PieChartContainer">
@@ -150,16 +155,30 @@ class Dashboard extends Component {
                             </div>}
                         </div>
                     </ItemGrid>
-                    <ItemGrid xs={12} sm={8} md={6}>
+                    <ItemGrid xs={itemGridCounter} sm={itemGridCounter/2} md={itemGridCounter/2}>
                         <div className='CardContainer'>
                             <div className="RunInfoContainer">
                                 <h3>Runner Info</h3>
                                 <Divider/>
                                 {this.renderRunInfo()}
+                                
                             </div>
                             <Divider />
                         </div>
                     </ItemGrid>
+                   {!isParallelRunner && <ItemGrid xs={itemGridCounter/2} sm={itemGridCounter/4} md={itemGridCounter/4}>
+                        <div className='CardContainer'>
+                            <div className="RunInfoContainer">
+                                <h3>Screenshot(s) per test</h3>
+                                <Divider/>
+                                <Button className="ScreenshotImageButton" >
+                                    <img src={Screenshot} className="ScreenshotImage" />
+                                </Button>
+                               
+                            </div>
+                            <Divider />
+                        </div>
+                    </ItemGrid>}
                 </Grid>
                 <div className="DeviceInformationContainer">
                 <h1>Devices</h1>
@@ -172,13 +191,14 @@ class Dashboard extends Component {
                         const passCnt = testsRunOnDevice ? testsRunOnDevice.filter((t) => t.testresult === 'Pass').length : 0;
                         const failCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Fail').length : 0;
                         const skipCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Skip').length :0 ;
+                        
                         console.log(testsRunOnDevice);
                         return <ItemGrid xs={12} sm={6} md={4}>
                             <StatsCard
                                 icon={icon}
                                 iconColor={iconColor}
                                 title={`${device.getName()}, ${device.getUdid()}`}
-                                small={` Version : ${device.getOsVersion()}`}
+                                small={<Small device={device}/>}
                                 statIconColor="info"
                                 statText={<StatText passCnt={passCnt} failCnt= {failCnt} skipCnt={skipCnt} 
                                     onClick = {() => this.handleDeviceOnClick({udid : device.getUdid()})}/>}
@@ -214,5 +234,16 @@ const StatText = (props) =>{
         </button>
     );
 }
+
+const Small = (props) => {
+    let {device} = props;
+    return (<div className="DeviceStatsSmallWrapper">
+        <div className="DeviceStatsSmallItem">
+            {`Host Machine IP : ${device.getHostName()}`}
+        </div>
+        <div className="DeviceStatsSmallItem">
+            {`Version : ${device.getOsVersion()}`}
+        </div>
+    </div>) }
 
 export default withRouter(Dashboard);

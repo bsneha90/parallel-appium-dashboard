@@ -32,7 +32,7 @@
     flex:1;
     height: 5.7vh;
     display: flex; 
-    width:65%;
+    width: 25vw;
 }
 
 .RunInfoTitle{
@@ -107,4 +107,28 @@
      position:relative; 
      top:-4px; 
      margin-left:6px;
+}
+
+.DeviceStatsSmallWrapper{
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.DeviceStatsSmallItem{
+    flex: 1;
+    margin-top:1vh;
+}
+
+.ScreenshotImage{
+    width: 12vw;
+    margin-left: 2vw;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    fill: blueviolet;
+}
+
+.ScreenshotImageButton{
+    width: 14.6vw;
 }

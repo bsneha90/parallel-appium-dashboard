@@ -113,6 +113,7 @@
 .TestDetailExpansionPanel{
     display: flex;
     flex-direction: column;
+    
 }
 .TestDetailExpansionPanelItem{
     flex:1;
@@ -135,4 +136,46 @@
 .TestSummaryExpansionPanelItem{
     padding-right:3vh;
     float: right;
+}
+
+.TestDetailsTab{
+    height: 8vh;
+    flex-grow: 1
+}
+
+.TestDetailExpansionPanelHeader{
+    display: flex;
+}
+
+.TestDetailExpansionPanelHeaderScreenshotImage{
+    width:2vw;
+}
+.TestDetailExpansionPanelHeaderText{
+    flex:1;
+}
+
+.TestDetailExpansionPanelHeaderButton{
+    top: 0.5vh;
+    right: 3vh;
+    flex:1;
+    background-color:rgba(117,200,176, 0.6) !important;
+}
+.ScreenshotModalContainer{
+    position: absolute;
+    left: 13%;
+    width: 75%;
+    height: 90%;
+    background-color: white;
+    top: 5%;
+}
+
+.TestExpansionPanel{
+   border: 0.1vw solid rgba(78, 80, 154, 0.6) !important;
+   /* box-shadow:0px 3px 4px 0px rgba(17, 243, 179, 0.14) !important; */
+   margin:0.3vw;
+}
+
+.ScreenshotModalContainer img{
+    width:25%;
+    padding: 2vw;
 }

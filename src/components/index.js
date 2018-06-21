@@ -2,6 +2,12 @@
 // // // App Header
 // #############################
 import AppHeader from './AppHeader/AppHeader'
+
+// ##############################
+// // // App Header
+// #############################
+import TextFileReader from './TextFileReader/TextFileReader'
+
 // ##############################
 // // // Cards
 // #############################
@@ -125,5 +131,6 @@ export {
   A,
   //PieChart
   Pie,
-  AppHeader
+  AppHeader,
+  TextFileReader
 };
