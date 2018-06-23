@@ -1,15 +1,6 @@
-export function readTextFile = file => {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = () => {
-        if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-                var allText = rawFile.responseText;
-                this.setState({
-                    text: allText
-                });
-            }
-        }
-    };
-    rawFile.send(null);
-};
+export function getDuration (endTime, startTime){
+    let timeStart = new Date("01/01/2007 " + startTime);
+    let timeEnd = new Date("01/01/2007 " + endTime);
+    var diff = (timeEnd - timeStart) / 60000;
+    return (diff * 60).toFixed();
+}

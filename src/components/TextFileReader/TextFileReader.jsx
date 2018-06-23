@@ -22,7 +22,6 @@ class TextFileReader extends React.Component {
 		this.setState({
 			text: file
 		});
-				
 	};
 
 	render() {

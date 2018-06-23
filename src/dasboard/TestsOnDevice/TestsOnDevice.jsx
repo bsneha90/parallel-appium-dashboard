@@ -3,6 +3,7 @@ import Constants from '../../Constants';
 import _ from 'lodash';
 import { getParsedTests } from '../../utils/TestParser';
 import {groupTestsByTestClass, getTestsWithLatestStatus, getCurrentRunningTest} from '../../utils/parser';
+import {getDuration}  from '../../utils/helper';
 import {
     ItemGrid,
     AppHeader,
@@ -154,10 +155,12 @@ export default class TestsOnDevice extends Component {
                            <HelpOutline style={{ color: Constants.SKIP_COLOR, marginRight: '1vh' }} />}
                    </Typography>
                    <div className="TestSummaryExpansionPanel">
-                        <Typography className="TestSummaryExpansionPanelItem">{test.testMethodName}</Typography>
-                        <Typography className="TestSummaryExpansionPanelItem">{`Start time: ${test.startTime} `}</Typography>
-                        <Typography className="TestSummaryExpansionPanelItem">{`End time: ${test.startTime} `}</Typography>
-                        <Typography className="TestSummaryExpansionPanelItem">{`Duration: 22m `}</Typography>
+                       <Typography className="TestSummaryExpansionPanelItem">{test.testMethodName}</Typography>
+                       <Typography className="TestSummaryExpansionPanelItem">{`Start time: ${test.startTime} `}</Typography>
+                       <Typography className="TestSummaryExpansionPanelItem">{`End time: ${test.endTime} `}</Typography>
+                       <Typography className="TestSummaryExpansionPanelItem">
+                           {`Duration: ${getDuration(test.endTime, test.startTime)} seconds`}
+                       </Typography>
                    </div>
                </ExpansionPanelSummary>
                <Divider/>
