@@ -57,7 +57,8 @@
 .column {
     float: left;
     width: 25%;
-    padding:2vw;
+    padding-right:2vw;
+    padding-left:2vw;
 }
 
 /* Clearfix (clear floats) */
@@ -65,5 +66,9 @@
     content: "";
     clear: both;
     display: table;
+}
+
+.TestsListContainerItem{
+    margin-bottom:2vh;
 }
 

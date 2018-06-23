@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Constants from '../Constants';
-
+import { keys } from 'material-ui/styles/createBreakpoints';
+import {getParsedDevice} from './DeviceParser'
 
 const getLatestTestStatusForEachTest = (teststatuses) => {
     let latestPassTestStatus = [];
@@ -82,8 +83,22 @@ export const groupTestsByTestClass = (tests) =>{
 }
 
 export const groupTestsByScreenPaths = (tests) =>{
-    let testsWithLatestStatus = tests.filter(t=>t.status ==='Completed');
-    
-
-    return testsWithLatestStatus;
+    let testsWithLatestStatus = tests.filter(t => t.status === 'Completed' && !_.isNil(t.screenPath));
+    let testsScreenShotPaths = []
+    testsWithLatestStatus.forEach(t => {
+        testsScreenShotPaths = _.union(testsScreenShotPaths, _.keys(t.screenPath))
+    }
+    );
+    let result = []
+    testsScreenShotPaths.forEach(key => {
+        let resultTests =[]
+        tests.forEach(t =>{ 
+            if(_.has(t.screenPath, key)){
+                let test = {testMethodName : t.testMethodName , screenShotPath : t.screenPath[key], 
+                    device : getParsedDevice(t.deviceinfo.device, t.deviceinfo.hostName)}
+                resultTests.push(test) ;
+            }})
+        result[key] = resultTests
+    });
+    return { pathNames: testsScreenShotPaths, result: result };
 }
