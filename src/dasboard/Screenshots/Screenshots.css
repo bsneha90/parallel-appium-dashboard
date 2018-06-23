@@ -71,4 +71,26 @@
 .TestsListContainerItem{
     margin-bottom:2vh;
 }
+.prev
+{
+    position: absolute;
+    top:50%;
+    left:5%;
+    width: 0;
+	height: 0;
+	border-top: 15px solid transparent;
+	border-right: 30px solid purple;
+	border-bottom: 15px solid transparent;
+}
 
+.next
+{
+    position: absolute;
+    top:50%;
+    right:5%;
+    width: 0;
+	height: 0;
+	border-top: 15px solid transparent;
+	border-left: 30px solid purple;
+	border-bottom: 15px solid transparent;
+}

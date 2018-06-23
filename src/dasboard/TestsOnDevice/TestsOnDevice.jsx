@@ -37,6 +37,7 @@ import Tab from '@material-ui/core/Tab';
 import Screenshot from '../../Screenshot.svg'
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
+import Carousel from 'react-flex-carousel';
 const ExpansionPanelDetailsItem =(props) =>{
     return(
         <div className="TestDetailExpansionPanelItem">
@@ -55,6 +56,8 @@ export default class TestsOnDevice extends Component {
             selectedTest : null,
             currentRunningTest : null,
             screenShotModalOpen :false,
+            selectedTestMethod :null,
+            userScreenShotModelOpen: false
         }
     }
 
@@ -123,7 +126,9 @@ export default class TestsOnDevice extends Component {
 
     handleClose = () =>{
         this.setState({
-            screenShotModalOpen :false
+            screenShotModalOpen :false,
+            selectedTestMethod:null,
+            userScreenShotModelOpen:false
         })
     }
 
@@ -133,14 +138,20 @@ export default class TestsOnDevice extends Component {
         })
     }
 
-    /*{"_id":"5b15a6bdf8337e5fa8ea96e3","testresult":"Pass","testcasename":"sliderTest"
-    ,"testClassName":"SliderTest1","deviceinfo":{"available":false,"hostName":"127.0.0.1"
-    ,"chromeDriverPort":0,"localDevice":true,"device":{"deviceType":"iOS 11.0","osVersion":"11.0"
-    ,"os":"iOS","name":"iPhone X","isDevice":false,"available":true,"deviceModel":"Not Supported"
-    ,"state":"Booted","udid":"8409ACC6-584C-4903-A7D3-1C887E8A9EC8","brand":"Not Supported"
-    ,"apiLevel":"Not Supported"},"port":60523},"status":"Started"}
-    */
+    handleTestMethodUserScreenshotsClick =(test) =>{
+        this.setState({
+            userScreenShotModelOpen: true,
+            selectedTestMethod: test
+        })
+    }
 
+    handleTestMethodFailureScreenshotsClick =(test) =>{
+        this.setState({
+            screenShotModalOpen: true,
+            selectedTestMethod: test
+        })
+    }
+   
     renderTestClassDetails =  () => {
         const {testsGroupedByClass,selectedTest} = this.state;
        return _.map(getTestsWithLatestStatus(testsGroupedByClass[selectedTest]), (test)=>{
@@ -166,11 +177,15 @@ export default class TestsOnDevice extends Component {
                <Divider/>
                <div className="TestDetailExpansionPanelHeader">
                <h3 className="TestDetailExpansionPanelHeaderText">ADB Logs</h3> 
-                   <IconButton className="TestDetailExpansionPanelHeaderButton" onClick={() => {this.setState({
-                       screenShotModalOpen:true
-                   })}}>
+                  { test.testresult ==='Fail' && test.screenShotFailure && <IconButton className="TestDetailExpansionPanelHeaderFailureButton" 
+                    onClick={() => this.handleTestMethodFailureScreenshotsClick(test)}>
                        <img src={Screenshot} className="TestDetailExpansionPanelHeaderScreenshotImage" />
-                   </IconButton>
+                   </IconButton>}
+                   &nbsp;
+                   {test.screenPath && _.keys(test.screenPath).length>0 && <IconButton className="TestDetailExpansionPanelHeaderButton" 
+                    onClick={() => this.handleTestMethodUserScreenshotsClick(test)}>
+                       <img src={Screenshot} className="TestDetailExpansionPanelHeaderScreenshotImage" />
+                   </IconButton>}
                </div>
                <Divider/>
                <ExpansionPanelDetails>
@@ -185,20 +200,28 @@ export default class TestsOnDevice extends Component {
     
 
    render(){
-      const {testsGroupedByClass,selectedTest,currentRunningTest} = this.state;
-      const deviceInfo =   selectedTest && getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device,
+      const {testsGroupedByClass,selectedTest,currentRunningTest,selectedTestMethod, userScreenShotModelOpen,screenShotModalOpen} = this.state;
+      const selectTestClassDetails = selectedTest && testsGroupedByClass[selectedTest]
+      const deviceInfo =   selectTestClassDetails && getParsedDevice(selectTestClassDetails[0].deviceinfo.device,
             testsGroupedByClass[selectedTest][0].deviceinfo.hostName);
+      const imagesToDisplay = selectedTestMethod && (screenShotModalOpen? [{url:selectedTestMethod.screenShotFailure, desc:'Failure'}] :
+      _.map(selectedTestMethod.screenPath, (value,key) => { return {url : value, desc: key}}));
        return (
            <div>
                <Modal
                    aria-labelledby="simple-modal-title"
                    aria-describedby="simple-modal-description"
-                   open={this.state.screenShotModalOpen}
+                   open={screenShotModalOpen || userScreenShotModelOpen}
                    onClose={this.handleClose}>
                    <div className="ScreenshotModalContainer">
-                       <img src="http://localhost:31338/1.jpeg"/>
-                       <img src="http://localhost:31338/2.jpeg"/>
-                       <img src="http://localhost:31338/3.jpeg"/>
+                   <Carousel switcher={true}>
+                     {_.map(imagesToDisplay, (img) =>{
+                           return <div className="ScreenshotModalWrapper">
+                               <img src={img.url} alt="Screenshot" className="ScreenshotImg" />
+                               <span className="caption">{img.desc}</span>
+                           </div>
+                     })} 
+                     </Carousel>
                    </div>
                </Modal>
                <div className="App">

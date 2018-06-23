@@ -160,6 +160,12 @@
     flex:1;
     background-color:rgba(117,200,176, 0.6) !important;
 }
+.TestDetailExpansionPanelHeaderFailureButton{
+    top: 0.5vh;
+    right: 3vh;
+    flex:1;
+    background-color:rgba(231, 76, 60, 0.6) !important;
+}
 .ScreenshotModalContainer{
     position: absolute;
     left: 13%;
@@ -167,6 +173,18 @@
     height: 90%;
     background-color: white;
     top: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ScreenshotModalWrapper{
+    display: inline-block;
+    -ms-flex-align: center;
+    /* align-items: center; */
+    -ms-flex-pack: center;
+    /* justify-content: center; */
+    /* vertical-align: top; */
+    text-align: center;
 }
 
 .TestExpansionPanel{
@@ -175,7 +193,9 @@
    margin:0.3vw;
 }
 
-.ScreenshotModalContainer img{
-    width:25%;
-    padding: 2vw;
+.ScreenshotImg{
+    width:27%;
+}
+.caption{
+    display: block;
 }
