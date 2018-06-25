@@ -1,6 +1,6 @@
 import { getParsedDevices } from "../utils/DeviceParser";
 import axios from 'axios'
-
+import ENV from '../env'
 // export const getDevices = () => {
 //     let devices = [
 //         { "device": { "udid": "8409ACC6-584C-4903-A7D3-1C887E8A9EC9", "name": "iPhone X", "state": "Booted", "isAvailable": true, "osVersion": "11.0", "os": "iOS", "deviceType": "iOS 11.0", "brand": "Not Supported", "apiLevel": "Not Supported", "isDevice": false, "deviceModel": "Not Supported" }, "port": 62600, "chromeDriverPort": 0, "deviceState": "AVAILABLE", "ipAddress": "127.0.0.1" },
@@ -11,7 +11,8 @@ import axios from 'axios'
 // }
 
 export const getDevices = (successCallback, errorCallback = () => { }) => {
-    axios.get('http://localhost:3000/devices')
+    console.log(ENV.URL);
+    axios.get(`${ENV.URL}/devices`)
         .then((response) => successCallback(getParsedDevices(response.data)))
         .catch((err) => errorCallback(err))
 
