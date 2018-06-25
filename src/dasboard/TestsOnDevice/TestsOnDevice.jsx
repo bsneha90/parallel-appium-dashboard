@@ -176,7 +176,7 @@ export default class TestsOnDevice extends Component {
                </ExpansionPanelSummary>
                <Divider/>
                <div className="TestDetailExpansionPanelHeader">
-               <h3 className="TestDetailExpansionPanelHeaderText">ADB Logs</h3> 
+               <h3 className="TestDetailExpansionPanelHeaderText">Details</h3> 
                   { test.testresult ==='Fail' && test.screenShotFailure && <IconButton className="TestDetailExpansionPanelHeaderFailureButton" 
                     onClick={() => this.handleTestMethodFailureScreenshotsClick(test)}>
                        <img src={Screenshot} className="TestDetailExpansionPanelHeaderScreenshotImage" />
@@ -190,7 +190,18 @@ export default class TestsOnDevice extends Component {
                <Divider/>
                <ExpansionPanelDetails>
                    <div className="TestDetailExpansionPanel">
-                       <TextFileReader url="http://localhost:31338/humans.txt" />
+                       {test.testException &&
+                           <div>
+                               <b>Exception Details:</b>
+                               <div className="ExceptionConatiner">{test.testException}</div>
+                           </div>}
+                           &nbsp;
+                       {test.adbLogs &&
+                           <div>
+                               <b>ADB Logs</b>
+                               <TextFileReader url={test.adbLogs} />
+                           </div>}
+
                    </div>
                </ExpansionPanelDetails>
                <Divider />
