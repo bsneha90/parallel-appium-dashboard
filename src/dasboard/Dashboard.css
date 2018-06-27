@@ -27,6 +27,8 @@
     text-align: left;
     margin: 1vh;
     padding-left:15px;
+    margin-top: 2vh;
+    margin-bottom: 2.7vh;
 }
 .RunInfoItem{
     flex:1;
@@ -131,4 +133,5 @@
 
 .ScreenshotImageButton{
     width: 14.6vw;
+    padding-bottom: 3.1vh !important;
 }
