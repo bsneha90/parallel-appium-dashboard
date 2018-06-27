@@ -173,10 +173,10 @@ class Dashboard extends Component {
                    {!isParallelRunner && <ItemGrid xs={itemGridCounter/2} sm={itemGridCounter/4} md={itemGridCounter/4}>
                         <div className='CardContainer'>
                             <div className="RunInfoContainer">
-                                <h3>Screenshot(s) per test</h3>
+                                <h3>Captured Screenshot(s)</h3>
                                 <Divider/>
-                                <Button className="ScreenshotImageButton" >
-                                    <img src={Screenshot} className="ScreenshotImage" onClick={this.handleScreenshotsOnClick}/>
+                                <Button className="ScreenshotImageButton" onClick={this.handleScreenshotsOnClick} >
+                                    <img src={Screenshot} className="ScreenshotImage" />
                                 </Button>
                                
                             </div>

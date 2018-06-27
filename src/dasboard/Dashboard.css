@@ -126,12 +126,11 @@
 .ScreenshotImage{
     width: 12vw;
     margin-left: 2vw;
-    margin-top: 3vh;
+    margin-top: 2vh;
     margin-bottom: 3vh;
     fill: blueviolet;
 }
 
 .ScreenshotImageButton{
     width: 14.6vw;
-    padding-bottom: 3.1vh !important;
 }
