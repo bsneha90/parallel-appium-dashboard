@@ -10,6 +10,7 @@ import {
 } from "../../components";
 import ReactTable from "react-table";
 import { Grid } from 'material-ui';
+import { withStyles } from '@material-ui/core/styles';
 import { getParsedDevice } from '../../utils/DeviceParser';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -36,6 +37,31 @@ import Tab from '@material-ui/core/Tab';
 import Screenshot from '../../Screenshot.svg'
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
+import EnvInfo from '../../components/EnvInfo/EnvInfo';
+import DeviceInfo from '../../components/DeviceInfo/DeviceInfo';
+import Tests from '../../components/Tests/Tests';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+		padding: theme.spacing.unit * 2,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+		minHeight: "320px",
+    marginTop: "8px",
+  },
+  paperSm: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginTop: "8px",
+    minHeight: '200px',
+  }
+});
+
 const ExpansionPanelDetailsItem =(props) =>{
     return(
         <div className="TestDetailExpansionPanelItem">
@@ -44,10 +70,11 @@ const ExpansionPanelDetailsItem =(props) =>{
         </div>
     )
 }
-export default class TestsOnDevice extends Component {
+class TestsOnDevice extends Component {
     constructor(props){
         super(props);
         let data = this.getDeviceDataFromLocalstorage()
+        /*
         this.state={
             udid: data.udid,
             testsGroupedByClass : null,
@@ -55,11 +82,14 @@ export default class TestsOnDevice extends Component {
             currentRunningTest : null,
             screenShotModalOpen :false,
         }
+        */
     }
 
     componentWillMount(){
+        /*
         const {udid} = this.state
         getTestStatusForDevice(udid,this.getTestStatusForDeviceSuccessCallback)
+        */
     }
 
     getTestStatusForDeviceSuccessCallback = (data) =>{
@@ -181,83 +211,34 @@ export default class TestsOnDevice extends Component {
     }
     
 
-   render(){
-      const {testsGroupedByClass,selectedTest,currentRunningTest} = this.state;
-      const deviceInfo =   selectedTest && getParsedDevice(testsGroupedByClass[selectedTest][0].deviceinfo.device,
-            testsGroupedByClass[selectedTest][0].deviceinfo.hostName);
-       return (
-           <div>
-               <Modal
-                   aria-labelledby="simple-modal-title"
-                   aria-describedby="simple-modal-description"
-                   open={this.state.screenShotModalOpen}
-                   onClose={this.handleClose}>
-                   <div className="ScreenshotModalContainer">
-                       <img src="http://localhost:31338/1.jpeg"/>
-                       <img src="http://localhost:31338/2.jpeg"/>
-                       <img src="http://localhost:31338/3.jpeg"/>
-                   </div>
-               </Modal>
-               <div className="App">
-                  <AppHeader/>
-               </div>
-               
-               <div className="TestsOnDevicesContainer">
-               {selectedTest &&  <div className="DeviceInfoWrapper">
-                   <Paper elevation={4} className="DeviceInfoContainer">
-                       <Typography variant="headline" component="h3" className="DeviceInfoHeader">
-                           {`${deviceInfo.getName()} `}
-                       </Typography>
-                       <div className="DeviceInfoDetails">
-                            <Typography component="p" className="DeviceIdDetails" >
-                               {`ID - ${deviceInfo.getUdid()}`}
-                           </Typography>
-                           <Typography component="p" className="DeviceDetails2" >
-                               {`Version : ${deviceInfo.getOsVersion()}`}
-                           </Typography>
-                           <Typography component="p" className="DeviceDetails3" >
-                               {`Host IP : ${deviceInfo.getHostName()}`}
-                           </Typography>
-                       </div>
-                   </Paper> 
-                   <Paper elevation={4} className="DeviceInfoContainer">
-                       <Typography variant="headline" component="h6" className="DeviceInfoHeader">
-                            Running Test
-                       </Typography>
-                       <div className="DeviceInfoDetails">
-                            <Typography component="p" className="DeviceIdDetails" >
-                               Test class: {currentRunningTest? currentRunningTest.testClassName: 'None'}
-                           </Typography>
-                           <Typography component="p" className="DeviceIdDetails" >
-                              Test method: {currentRunningTest? currentRunningTest.testMethodName: 'None'}
-                           </Typography>
-                       </div>
-                   </Paper> 
-                   </div>}
-                   {selectedTest && <Grid container>
-                       <ItemGrid xs={4} sm={4} md={4}>
-                           <div className="TestClassesList">
-                               <h3>Tests</h3>
-                               <div className="TestClassesListItemsContainer">
-                                   <div> {this.renderItems()} </div>
-                               </div>
-                           </div>
-                       </ItemGrid>
-                       <ItemGrid xs={8} sm={8} md={8}>
-                           <div className="TestClassDetails">
-                            <h3>Test Methods</h3>
-                            <div className="TestClassDetailsItemsWrapper">
-                               {this.renderTestClassDetails()}
-                            </div>
-                           </div>
-                       </ItemGrid>
-                   </Grid>}
-                   {selectedTest===undefined && <div>No tests found</div>}
-               </div>
-              
-             
-
-           </div>)
-   }
-
+  render(){
+    const classes = this.props.classes;
+    return (
+      <div className={classes.root}>
+        <EnvInfo/>
+        <Grid container spacing={16}>
+          <Grid item xs={2}>
+              <Grid item xs={12}>
+              </Grid>
+          </Grid>
+          <Grid item xs={8}>
+            <Grid container spacing={16}>
+                <Grid item xs={12}>
+                  <Paper className={classes.paperSm} elevation={4}>
+                    <DeviceInfo/>
+                    <Tests/>
+                  </Paper>
+                </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={2}>
+              <Grid item xs={12}>
+              </Grid>
+          </Grid>
+        </Grid>
+      </div>
+    )    
+  }
 }
+
+export default withStyles(styles)(TestsOnDevice);

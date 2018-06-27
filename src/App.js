@@ -8,6 +8,22 @@ import { getDevices } from './services/devices'
 import { getTestStatuses } from './services/testStatuses'
 import {getEnvInfo} from './services/envInfo'
 import {AppHeader} from './components'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Switch, Route,Router } from 'react-router';
+import Constants from './Constants';
+import TestsOnDevice from './dasboard/TestsOnDevice/TestsOnDevice';
+import Screenshots from './dasboard/Screenshots/Screenshots';
+
+const theme = createMuiTheme({
+  typography: {
+   	fontFamily: [
+      'Source Sans Pro',
+      '"Helvetica Neue"',
+      'sans-serif',
+    ].join(','), 
+  }
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -51,11 +67,17 @@ class App extends Component {
   render() {
     const { testStatuses, devices,envInfo } = this.state;
     return (
-      <div className="App">
-       <AppHeader/>
-        <Dashboard testStatuses={testStatuses} devices ={devices} envInfo={envInfo}
-          testCountMetrics={getCountMetricsOfTestResults(testStatuses)} />
-      </div>
+      <MuiThemeProvider theme={theme}>
+        <div className="App">
+          <AppHeader/>
+          <Switch>
+            <Route exact path="/" render={() => <Dashboard testStatuses={testStatuses} devices ={devices} envInfo={envInfo} testCountMetrics={getCountMetricsOfTestResults(testStatuses)} />
+            } />
+            <Route path={Constants.ROUTES.TESTS_ON_DEVICES} component={TestsOnDevice} />
+            <Route path={Constants.ROUTES.DISTRIBUTED_TESTS_SCREENSHOTS} component={Screenshots} />
+          </Switch>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

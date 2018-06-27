@@ -1,5 +1,14 @@
+@import "https://fonts.googleapis.com/css?family=Roboto";
+@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300";
+
+body {
+	background: #eee;
+}
+
 .App {
+	font-family: 'Source Sans Pro', 	sans-serif;
   text-align: center;
+	background: #eee;
 }
 .App-logo {
   height: 50px;
@@ -8,21 +17,17 @@
 
 
 .App-header {
-  height: 20px;
-  padding-top: 5px;
-  padding-bottom: 30px;
-  padding-left: 15px;
-  padding-right: 15px;
-  
+	padding: 10px 20px;
+	text-align: left;
+	display: flex;
+	align-items: center;
 }
 
 .App-title {
-  font-size: 1.6em;
+  font-size: 1.2em;
   clear: none; 
   display: inline; 
-  color:purple;
-  position: relative;
-  top: -12px;
+  color: #000;
   margin-left: 0.5vw;
 }
 
@@ -30,3 +35,6 @@
   font-size: medium;
 }
 
+.CardContainer {
+	background-color: #fff;
+}

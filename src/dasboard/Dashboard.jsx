@@ -9,6 +9,7 @@ import {
     Android,
     ArrowForward
 } from "@material-ui/icons";
+import { withStyles } from '@material-ui/core/styles';
 import AppleSvgIcon from '../components/Icons/AppeSvgIcon'
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -18,6 +19,7 @@ import CheckCircle from "@material-ui/icons/CheckCircle";
 import ErrorOutline from "@material-ui/icons/ErrorOutline";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Divider } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import './Dashboard.css'
 import PieChart from 'react-minimal-pie-chart';
 import { getTestGroupByEachDevice } from '../utils/parser';
@@ -30,6 +32,10 @@ import {
 import Screenshot from '../Screenshot.svg'
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import VisualSummary from '../components/VisualSummary/VisualSummary';
+import EnvInfo from '../components/EnvInfo/EnvInfo';
+import ScreenShotsSummary from '../components/ScreenShotsSummary/ScreenShotsSummary';
+import DeviceList from '../components/DeviceList/DeviceList';
 const passColor = Constants.PASS_COLOR
 const failColor = Constants.FAIL_COLOR
 const unknownColor = Constants.SKIP_COLOR
@@ -41,12 +47,50 @@ const RunnerInfoItem =(props) =>{
             </div>
         )
 }
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+		padding: theme.spacing.unit * 2,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+		minHeight: "320px",
+    marginTop: "8px",
+  },
+  paperSm: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginTop: "8px",
+    minHeight: '200px',
+  }
+});
+
 class Dashboard extends Component {
     constructor(props){
         super(props)
         this.state={
-            testOnDevices : getTestGroupByEachDevice(props.testStatuses),
+          testOnDevices : getTestGroupByEachDevice(props.testStatuses),
+					data: [
+						{
+							"name": "passed",
+							"value": 90,
+						},
+						{
+							"name": "failed",
+							"value": 25,
+						},
+						{
+							"name": "skipped",
+							"value": 25,
+						},
+					]
         }
+				const { classes } = props;
+				this.classes = classes;
     }
 
     componentWillReceiveProps(props, nextProps){
@@ -85,7 +129,27 @@ class Dashboard extends Component {
     render() {
         let { testCountMetrics,devices,envInfo } = this.props;
         let {testOnDevices} = this.state;
-        
+
+				setTimeout(function() {
+					this.setState({
+          	testOnDevices : getTestGroupByEachDevice(this.props.testStatuses),
+						data: [
+							{
+								"name": "passed",
+								"value": 80,
+							},
+							{
+								"name": "failed",
+								"value": 15,
+							},
+							{
+								"name": "skipped",
+								"value": 5,
+							},
+						]
+					});
+				}.bind(this), 3000);
+
         console.log(devices,'testOnDevices')
         let { countOfPass, countOfFail, countOfUnknown } = testCountMetrics;
         const totalCnt = countOfPass + countOfFail + countOfUnknown;
@@ -97,120 +161,33 @@ class Dashboard extends Component {
         const isParallelRunner = false//envInfo ? (envInfo.Runner === 'parallel' ? true : false) :true;
         let itemGridCounter = isParallelRunner ? 12 : 8;
         return (
-            <div>
-                <Grid container>
-                    <ItemGrid xs={12} sm={6} md={6}>
-                        <div className='CardContainer'>
-                       
-                            <div className="PieChartContainer">
-                                <h3>Metrics</h3></div>
-                            <Divider />
-                            { testOnDevices ==null && <div className="PieChartContainerNoTests">No tests found</div>}
-                            { testOnDevices && <div>
-                            <div className="PieChartWrapper">
-                                <div className="PieChart">
-                                    <p className='PieChartItemHeader'>Chart</p>
-                                    <PieChart
-                                        animate
-                                        lineWidth={50}
-                                        paddingAngle={1}
-                                        data={pieCharData}
-                                        style={{width:'60%', padding:'5px'}}
-                                    />
-                                </div>
-                                <div className="PieChartIndex">
-                                    <p className='PieChartItemHeader'>Status</p>
-                                    <List className="PieChartIndexList">
-                                        <ListItem>
-                                            <ListItemIcon>
-                                                <CheckCircle style={{ color: passColor }} />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Pass" />
-                                        </ListItem>
-                                        <ListItem >
-                                            <ListItemIcon style={{ color: failColor }}>
-                                                <ErrorOutline />
-                                            </ListItemIcon >
-                                            <ListItemText primary="Fail" />
-                                        </ListItem>
-                                        <ListItem >
-                                            <ListItemIcon style={{ color: unknownColor }}>
-                                                <HelpOutline />
-                                            </ListItemIcon >
-                                            <ListItemText primary="Skip" />
-                                        </ListItem>
-                                    </List>
-                                </div>
-                                <div className="PieChartProgress">
-                                    <p className='PieChartItemHeader'>Progress</p>
-                                    <List className="PieChartIndexList">
-                                        <ListItem>
-                                            <ListItemText primary={`${(countOfPass * percentage).toFixed(2)}%`} />
-                                        </ListItem>
-                                        <ListItem >
-                                            <ListItemText primary={`${(countOfFail * percentage).toFixed(2)}%`} />
-                                        </ListItem>
-                                        <ListItem >
-                                            <ListItemText primary={`${(countOfUnknown * percentage).toFixed(2)}%`}/>
-                                        </ListItem>
-                                    </List>
-                                </div>
-                            </div>
-                            </div>}
-                        </div>
-                    </ItemGrid>
-                    <ItemGrid xs={itemGridCounter} sm={itemGridCounter/2} md={itemGridCounter/2}>
-                        <div className='CardContainer'>
-                            <div className="RunInfoContainer">
-                                <h3>Runner Info</h3>
-                                <Divider/>
-                                {this.renderRunInfo()}
-                                
-                            </div>
-                            <Divider />
-                        </div>
-                    </ItemGrid>
-                   {!isParallelRunner && <ItemGrid xs={itemGridCounter/2} sm={itemGridCounter/4} md={itemGridCounter/4}>
-                        <div className='CardContainer'>
-                            <div className="RunInfoContainer">
-                                <h3>Screenshot(s) per test</h3>
-                                <Divider/>
-                                <Button className="ScreenshotImageButton" >
-                                    <img src={Screenshot} className="ScreenshotImage" onClick={this.handleScreenshotsOnClick}/>
-                                </Button>
-                               
-                            </div>
-                            <Divider />
-                        </div>
-                    </ItemGrid>}
-                </Grid>
-                <div className="DeviceInformationContainer">
-                <h1>Devices</h1>
-                <Grid container>
-                { devices ==null && <div className="DeviceInformationContainerNoDevices">No devices found</div>}
-                {devices && devices.map((device) => {
-                        const icon = device.getOS().toLowerCase() === 'android' ? Android : AppleSvgIcon;
-                        const iconColor = device.getOS().toLowerCase() === 'android' ? 'green' :'gray'
-                        const testsRunOnDevice = testOnDevices && (device.getUdid() in testOnDevices) && testOnDevices[device.getUdid()];
-                        const passCnt = testsRunOnDevice ? testsRunOnDevice.filter((t) => t.testresult === 'Pass').length : 0;
-                        const failCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Fail').length : 0;
-                        const skipCnt = testsRunOnDevice ?testsRunOnDevice.filter((t) => t.testresult === 'Skip').length :0 ;
-                        
-                        console.log(testsRunOnDevice);
-                        return <ItemGrid xs={12} sm={6} md={4}>
-                            <StatsCard
-                                icon={icon}
-                                iconColor={iconColor}
-                                title={`${device.getName()}, ${device.getUdid()}`}
-                                small={<Small device={device}/>}
-                                statIconColor="info"
-                                statText={<StatText passCnt={passCnt} failCnt= {failCnt} skipCnt={skipCnt} 
-                                    onClick = {() => this.handleDeviceOnClick({udid : device.getUdid()})}/>}
-                            />
-                        </ItemGrid>
-                    })}
-                </Grid>
-                </div>
+            <div className={this.classes.root}>
+                <EnvInfo/>
+                <Grid container spacing={16}>
+									<Grid item xs={2}>
+											<Grid item xs={12}>
+											</Grid>
+									</Grid>
+									<Grid item xs={8}>
+										<Grid container spacing={16}>
+												<Grid item xs={6}>
+													<Paper className={this.classes.paper} elevation={4}><VisualSummary data={this.state.data}/></Paper>
+												</Grid>
+												<Grid item xs={6}>
+													<Paper className={this.classes.paper} elevation={4}><ScreenShotsSummary/></Paper>
+												</Grid>
+										</Grid>
+										<Grid container spacing={16}>
+												<Grid item xs={12}>
+													<Paper className={this.classes.paperSm} elevation={4}><DeviceList devices={devices}/></Paper>
+												</Grid>
+										</Grid>
+									</Grid>
+									<Grid item xs={2}>
+											<Grid item xs={12}>
+											</Grid>
+									</Grid>
+								</Grid>
             </div>
         );
     }
@@ -250,4 +227,4 @@ const Small = (props) => {
         </div>
     </div>) }
 
-export default withRouter(Dashboard);
+export default withStyles(styles)(withRouter(Dashboard));
